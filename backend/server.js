@@ -20,13 +20,13 @@ app.use((cors()))
 
 // api endpoint
 app.use('/api/admin',adminRouter)
-
+app.use('/api/admin/login',adminRouter)
 //localhost:4000.api/admin/add-doctor
 
 
 
 
 app.get('/',(req,res)=>{
-res.send('working fully sucess')})
+res.send('working fully sucess fine good')})
 
 app.listen(PORT,()=>console.log("server is running",PORT))

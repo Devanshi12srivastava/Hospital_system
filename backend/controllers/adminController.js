@@ -1,11 +1,14 @@
 // api for adding doctors
 import validator from "validator";
 import bcrypt from "bcrypt";
-import {v2 as cloudinary} from "cloudinary"
+import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
+import jwt from "jsonwebtoken";
+
 const addDoctors = async (req, res) => {
-    console.log("BODY:", req.body);
-console.log("FILE:", req.file);
+  console.log("BODY:", req.body);
+  console.log("FILE:", req.file);
+
   try {
     //console.log(req.body)
     const {
@@ -18,7 +21,7 @@ console.log("FILE:", req.file);
       about,
       fees,
       address,
-      available
+      available,
     } = req.body;
 
     const imageFile = req.file;
@@ -32,7 +35,6 @@ console.log("FILE:", req.file);
       !experience ||
       !about ||
       !fees
-
     ) {
       return res.json({
         success: false,
@@ -46,36 +48,39 @@ console.log("FILE:", req.file);
         message: "enter validate email",
       });
     }
-    if(password.length<5){
-        return res.json({
-            success:false, message:"please enter a valid password"
-        })
+    if (password.length < 5) {
+      return res.json({
+        success: false,
+        message: "please enter a valid password",
+      });
     }
 
     //hash password
-const SALT = await bcrypt.genSalt(10)
-const hashedPass =await bcrypt.hash(password,SALT)
+    const SALT = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(password, SALT);
 
+    const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+      resource_type: "image",
+    });
+    const imageUrl = imageUpload.secure_url;
 
-const imageUpload = await cloudinary.uploader.upload(imageFile.path,{resource_type:"image"})
-const imageUrl=imageUpload.secure_url
-
-
-const doctorData={name,
+    const doctorData = {
+      name,
       email,
-      image:imageUrl,
-      password:hashedPass,
+      image: imageUrl,
+      password: hashedPass,
       speciality,
       degree,
       experience,
       about,
       fees,
       address,
-      available:available=='true',
-    date:Date.now()}
+      available: available == "true",
+      date: Date.now(),
+    };
 
-    const newDoctor=new doctorModel(doctorData)
-    await newDoctor.save()
+    const newDoctor = new doctorModel(doctorData);
+    await newDoctor.save();
 
     console.log(
       {
@@ -99,4 +104,23 @@ const doctorData={name,
   }
 };
 
-export { addDoctors };
+//api  for admin login
+const loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD){
+
+     const token = jwt.sign(email+password,process.env.JWT_SECRET)
+     res.json({sucess:true,token})
+   
+    } else {
+      res.json({ sucess: false, message: "Invalid credentials" });
+    }
+  } catch (error) {
+    consoel.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+export { addDoctors,loginAdmin };
