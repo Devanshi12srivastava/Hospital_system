@@ -48,7 +48,7 @@ const Login = () => {
               <input
                 className="border border-zinc-300 rounded-lg w-full p-2 mt-1"
                 type="password"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
             </div>
