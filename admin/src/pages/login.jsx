@@ -1,37 +1,37 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { AdminContext } from "../context/AdminContext";
-import axios from "axios"
+import axios from "axios";
 const Login = () => {
   const [state, setState] = useState("Admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-const {setAdminToken,backendUrl} =useContext(AdminContext)
+  const { setAdminToken, backendUrl } = useContext(AdminContext);
 
-
-  const onSubmitLogin = async(e) => {
+  const onSubmitLogin = async (e) => {
     e.preventDefault();
- setEmail("")
- setPassword("")
+    setEmail("");
+    setPassword("");
     console.log({ state, email, password });
-        console.log("Submitting login for:", state);
+    console.log("Submitting login for:", state);
 
-    try{
-      if(state ==='Admin'){
-    
-        const {data}=await axios.post(backendUrl+'/api/admin/login',{email,password})
+    try {
+      if (state === "Admin") {
+        const { data } = await axios.post(backendUrl + "/api/admin/login", {
+          email,
+          password,
+        });
         console.log("Full server response:", data);
-        localStorage.setItem('AdminToken',data.token)
-        setAdminToken(data.token)
-        
+        localStorage.setItem("AdminToken", data.token);
+        setAdminToken(data.token);
+      } else {
       }
-      else{
-
-      }
-    }
-    catch(err){
- console.log("Login error:", err.response ? err.response.data : err.message);
+    } catch (err) {
+      console.log(
+        "Login error:",
+        err.response ? err.response.data : err.message,
+      );
     }
   };
 
@@ -62,12 +62,31 @@ const {setAdminToken,backendUrl} =useContext(AdminContext)
           </div>{" "}
           <button
             className="bg-blue-400 text-white w-full py-2 rounded-md text-base cursor-pointer hover:bg-blue-500"
-            onClick={()=>console.log("Clicked")}
+            onClick={() => console.log("Clicked")}
           >
             Login
-          </button>{
-            state==="Admin"?<p>Doctor login? <span className="cursor-pointer text-blue-700 underline" onClick={()=>setState('Doctor')}>Click here</span></p>:<p>Admin login? <span className="cursor-pointer text-blue-700 underline" onClick={()=>setState('Admin')}>Click login</span></p>
-          }
+          </button>
+          {state === "Admin" ? (
+            <p>
+              Doctor login?{" "}
+              <span
+                className="cursor-pointer text-blue-700 underline"
+                onClick={() => setState("Doctor")}
+              >
+                Click here
+              </span>
+            </p>
+          ) : (
+            <p>
+              Admin login?{" "}
+              <span
+                className="cursor-pointer text-blue-700 underline"
+                onClick={() => setState("Admin")}
+              >
+                Click login
+              </span>
+            </p>
+          )}
         </div>
       </form>
     </>
