@@ -54,7 +54,14 @@ const addDoctors = async (req, res) => {
         message: "please enter a valid password",
       });
     }
+    const existingDoctor = await doctorModel.findOne({ email });
 
+    if (existingDoctor) {
+      return res.json({
+        success: false,
+        message: "Doctor already exists",
+      });
+    }
     //hash password
     const SALT = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(password, SALT);
@@ -75,11 +82,11 @@ const addDoctors = async (req, res) => {
       about,
       fees,
       address,
-      available: available == "true",
+     available: JSON.parse(available),
       date: Date.now(),
     };
 
-    const newDoctor = new doctorModel(doctorData);
+    const newDoctor = new doctorModel(doctorData); // or await doctorModel.create(doctorData);
     await newDoctor.save();
 
     console.log(
@@ -110,17 +117,29 @@ const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
     if (
       email === process.env.ADMIN_EMAIL &&
-      password === process.env.ADMIN_PASSWORD){
-
-     const token = jwt.sign(email+password,process.env.JWT_SECRET)
-     res.json({sucess:true,token})
-   
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const token = jwt.sign({ email: email }, process.env.JWT_SECRET, {
+        expiresIn: "2d",
+      });
+      res.json({ success: true, token });
     } else {
-      res.json({ sucess: false, message: "Invalid credentials" });
+      res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
-    consoel.log(error);
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
-export { addDoctors,loginAdmin };
+
+//api for all doctors list
+const allDoctors = async (req, res) => {
+  try {
+    const doctors = await doctorModel.find({}).select("-password");
+    res.status(200).json({ success: true, doctors });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+export { addDoctors, loginAdmin, allDoctors };

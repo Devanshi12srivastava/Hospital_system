@@ -2,12 +2,15 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  phone: { type: Number, required: true },
+  phone: { type: Number},
   email: { type: String,default:"user", unique: true },
   password: { type: String, required: true },
-  image: { type: String, default: "Not Selected" },
-  dob: { type: Number, default: "Not Selected" },
-  address: { type: String,default:"PUNE" },
+  image: { type: String,default: null
+},
+  dob: { type: Date,default: null
+},
+  address: { type: String,default: null
+ },
 });
 
 const userModel = mongoose.models.user || mongoose.model("user", userSchema);
