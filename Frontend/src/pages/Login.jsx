@@ -1,13 +1,53 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
+import { registerUser } from "../api/authApi";
+import { toast } from "react-toastify";
 
 const Login = () => {
+
+  const {token,setToken,backendUrl}=useContext(AppContext);
+
   const [state, setState] = useState("Sign Up");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
+  
   const sumbitForm = async (e) => {
     e.preventDefault();
+    try{
+      if(state==='sign Up'){
+        const response=await registerUser(backendUrl,payload);
+        const data=response.data
+        if(data.success){
+          localStorage.setItem('token',data.token)
+          setToken(data.token)
+          toast.success("successfully register")
+
+        }
+        else{
+          toast.error(data.message)
+
+        }
+      }
+      else{
+         const response=await registerUser(backendUrl,payload);
+        const data=response.data
+        if(data.success){
+          localStorage.setItem('token',data.token)
+          setToken(data.token)
+          toast.success("successfully register")
+
+        }
+        else{
+          toast.error(data.message)
+
+        }
+      }
+    }
+    catch(error){
+
+    }
   };
 
   return (
