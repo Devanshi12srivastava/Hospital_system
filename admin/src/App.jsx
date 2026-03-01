@@ -7,6 +7,9 @@ import Dashboard from "./pages/Admin/Dashboard";
 import AllApointment from "./pages/Admin/AllApointment";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import DoctorsList from "./pages/Admin/DoctorsList";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const router = createBrowserRouter([
   {
@@ -22,9 +25,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  
   const { adminToken } = useContext(AdminContext);
   return adminToken ? (
+    
     <div className="bg-gray-100">
+            
+  <ToastContainer />
       <RouterProvider router={router} />
     </div>
   ) : (

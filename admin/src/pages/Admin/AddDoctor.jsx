@@ -3,7 +3,7 @@ import { assets } from "../../assets/assets_admin/assets";
 import { useContext } from "react";
 import { AdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
-import axios from "axios";
+import {addDoctor} from "../../api/addDoctorapi";
 
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
@@ -11,12 +11,13 @@ const AddDoctor = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [experience, setExperience] = useState("1 year");
+  const [experience, setExperience] = useState("");
   const [fees, setFees] = useState("");
   const [About, setAbout] = useState("");
-  const [speciality, setSpeciality] = useState("General Physician");
+  const [speciality, setSpeciality] = useState("");
   const [degree, setdegree] = useState("");
   const [address, setAddress] = useState("");
+
   const { backendUrl, adminToken } = useContext(AdminContext);
 
   const onSubmitHandler = async (e) => {
@@ -39,24 +40,18 @@ const AddDoctor = () => {
       formData.append("speciality", speciality);
       formData.append("degree", degree);
       formData.append("address", address);
+      formData.append("available", available);
 
       //console formData
       formData.forEach((value, key) => {
         console.log(` formdata is ${key}:${value}`);
       });
 
-      const { data } = await axios.post(
-        backendUrl + "/api/admin/add-doctor",
-        formData,
-        {
-          headers: {
-            admintoken: adminToken,
-          },
-        },
-      );
+      const  response  = await addDoctor(backendUrl,formData,adminToken);
+      const data=response.data
       console.log("Full Backend Response:", data);
       if (data.success) {
-        toast.success(data.message);
+        toast.success(data.message || "sucess");
         console.log("data", data);
 
         setName("");
@@ -66,15 +61,15 @@ const AddDoctor = () => {
         setFees("");
         setAbout("");
         setSpeciality("");
-        setDegree("");
+        setdegree("");
         setAddress("");
         setDocImg(null);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log("Frontend Error:", error);
-      alert("eror")
+      console.log( "something wrong");
+     
     }
   };
 
