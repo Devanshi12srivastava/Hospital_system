@@ -1,58 +1,64 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { registerUser } from "../api/authApi";
+import { loginUser, registerUser } from "../api/authApi";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-  const {token,setToken,backendUrl}=useContext(AppContext);
+  const { token, setToken, backendUrl } = useContext(AppContext);
 
   const [state, setState] = useState("Sign Up");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  
+  const navigate=useNavigate()
+
   const sumbitForm = async (e) => {
     e.preventDefault();
-    try{
-      if(state==='sign Up'){
-        const response=await registerUser(backendUrl,payload);
-        const data=response.data
-        if(data.success){
-          localStorage.setItem('token',data.token)
-          setToken(data.token)
-          toast.success("successfully register")
-
+        const payload={name,email,password}
+    try {
+      if (state === "Sign Up") {
+        const response = await registerUser(backendUrl, payload);
+        const data = response.data;
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          toast.success("successfully register");
+        } else {
+          toast.error(data.message);
+          console.log("error",error)
         }
-        else{
-          toast.error(data.message)
-
+      } else {
+         const payload={email,password}
+        const response = await loginUser(backendUrl, payload);
+        const data = response.data;
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          console.log("login data",data)
+          toast.success("successfully login");
+          navigate('/')
+        } else {
+            console.log("Axios Error:", error.response?.data || error.message);
+    toast.error(error.response?.data?.message || "Server Error");
         }
       }
-      else{
-         const response=await registerUser(backendUrl,payload);
-        const data=response.data
-        if(data.success){
-          localStorage.setItem('token',data.token)
-          setToken(data.token)
-          toast.success("successfully register")
-
-        }
-        else{
-          toast.error(data.message)
-
-        }
-      }
-    }
-    catch(error){
-
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error)
     }
   };
 
+  useEffect(()=>{
+if(token){
+navigate('/')
+}
+  },[])
+
   return (
     <>
-      <form className="min-h-[80vh] flex items-center">
+      <form onSubmit={sumbitForm} className="min-h-[80vh] flex items-center">
         <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-100 border border-gray-200 bg-white shadow-sm rounded-xl text-gray-600">
           <p className="text-2xl font-semibold">
             {" "}
@@ -92,7 +98,10 @@ const Login = () => {
                 value={password}
               />
             </div>
-            <button className="bg-blue-400 px-5 py-3 w-full rounded-lg mt-10 text-white font-medium">
+            <button
+              type="submit"
+              className="bg-blue-400 px-5 py-3 w-full rounded-lg mt-10 text-white font-medium"
+            >
               {state == "Sign Up" ? "Create Account" : "login"}
             </button>
             {state === "Sign Up" ? (

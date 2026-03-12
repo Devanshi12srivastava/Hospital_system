@@ -1,12 +1,21 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets/assets";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
   const [showMenu, setshowMenu] = useState(false);
-  const [token, setToken] = useState(true);
+  // const [token, setToken] = useState(true);
+  const {token,setToken} = useContext(AppContext);
+
+const logout=()=>{
+  setToken(false)
+  localStorage.removeItem('token');
+  navigate('/login')
+}
+
   return (
     <div className="flex items-center justify-between text-sm py-10 mb-5 border-b border-b-blue-200 ">
       <img className="w-44" src={assets.logo} alt="logo" />
@@ -56,7 +65,7 @@ const Navbar = () => {
                   My Appointments
                 </p>
                 <p
-                  onClick={() => setToken(false)}
+                  onClick={logout}
                   className="hover:text-blue-400"
                 >
                   Logout
