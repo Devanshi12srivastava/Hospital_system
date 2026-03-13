@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets/assets";
+import { updateProfile } from "../api/userApi";
+import { toast } from "react-toastify";
 
 const MyProfile = () => {
-  const { userData, setUserData } = useContext(AppContext);
+  const { userData, setUserData,token,loadUserProfile,backendUrl } = useContext(AppContext);
 
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(false);
@@ -18,7 +20,25 @@ const MyProfile = () => {
 
       image && formData.append("image", image);
 
-    } catch (error) {}
+      const response = await updateProfile(backendUrl, formData, token);
+      const data = response.data;
+      if(data.success){
+        toast.success(data.message)
+        await loadUserProfile()
+        setIsEdit(false)
+        setImage(false)
+           console.log("data is", data);
+      }
+      else{
+        toast.error(data.message)
+      } 
+   
+
+      
+    } catch (error) {
+      console.log(error.message)
+      toast.error(error.message)
+    }
   };
 
   return (
@@ -29,7 +49,7 @@ const MyProfile = () => {
             <div className="inline-block relative cursor-pointer">
               <img
                 className="w-36 rounded-2xl opacity-75"
-                src={image ? URL.createObjectURL(image) : userData.image}
+                src={image ? URL.createObjectURL(image) : userData?.image || assets.profile_pic}
                 alt=""
               />
               <img
@@ -53,7 +73,7 @@ const MyProfile = () => {
           <input
             className="bg-gray-100 text-3xl font-medium max-w-60 mt-4"
             type="text"
-            value={userData.name}
+            value={userData?.name || ""}
             onChange={(e) =>
               setUserData((prev) => ({ ...prev, name: e.target.value }))
             }
@@ -71,7 +91,7 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="text"
-                value={userData.email}
+                value={userData.email || ""}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, email: e.target.value }))
                 }
@@ -84,7 +104,7 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="text"
-                value={userData.phone}
+                value={userData.phone || ""}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, phone: e.target.value }))
                 }
@@ -96,7 +116,7 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="text"
-                value={userData.address}
+                value={userData.address || ""}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, address: e.target.value }))
                 }
@@ -113,7 +133,7 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="date"
-                value={userData.dob}
+                value={userData.dob || ""}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, dob: e.target.value }))
                 }

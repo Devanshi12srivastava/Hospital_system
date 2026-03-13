@@ -4,3 +4,16 @@ export const loadUserDataApi=(backendUrl,token)=>{
 
     );
 };
+
+export const updateProfile = (backendUrl, formData, token) => {
+  return axios.post(
+    `${backendUrl}/api/user/update-profile`,
+    formData,
+    {
+      headers: {
+        usertoken: token,
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+};
