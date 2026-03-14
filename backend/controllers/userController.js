@@ -119,8 +119,12 @@ const userProfileUpdate = async (req, res) => {
 
 const bookAppointment = async (req, res) => {
   try {
-    const { userId, docId, slotDate, slotTime } = req.body;
+    const { docId, slotDate, slotTime } = req.body;
+  const userId = req.userId;
+  
+    if (!userId) return res.status(401).json({ success: false, message: "User not found" });
 
+ 
     const docData = await doctorModel.findById(docId).select("-password");
     if (!docData.available) {
       return res.json({ success: false, message: "doctor not available" });
@@ -160,4 +164,4 @@ res.json({success:true,message:"appointmnet booked"})
   }
 };
 
-export { registerUser, loginUser, getProfileData, userProfileUpdate };
+export { registerUser, loginUser, getProfileData, userProfileUpdate, bookAppointment};

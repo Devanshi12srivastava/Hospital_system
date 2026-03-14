@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema({
     userId:{type:String,required:true},
@@ -7,7 +7,7 @@ const appointmentSchema = new mongoose.Schema({
     userData:{type:Object,required:true},
     docData:{type:Object,required:true},
     amount:{type:Number,required:true},
-    date:{tyep:Number},
+    date:{type:Number},
     cancelled:{type:Boolean,default:false},
     payment:{type:Boolean,default:false},
     isCompleted:{type:Boolean,default:false}
