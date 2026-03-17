@@ -1,4 +1,4 @@
-Online Appointment Booking System (Work in Progress)
+**Online Appointment Booking System (Work in Progress)**
 📌 Project Overview
 
 The Doctor Appointment System is a web-based application designed to simplify the process of booking and managing doctor appointments. It provides an easy-to-use interface for both patients and administrators.
