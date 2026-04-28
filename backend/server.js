@@ -16,7 +16,15 @@ connectDB()
 connectCloudinary()
 
 // middleware
+console.log("=== ENV DEBUG START ===");
 
+console.log("RAZORPAY_KEY_ID:", process.env.RAZORPAY_KEY_ID);
+console.log("RAZORPAY_KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
+console.log("CURRENCY:", process.env.CURRENCY);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+console.log("DB:", process.env.MONGODB_URL);
+
+console.log("=== ENV DEBUG END ===");
 app.use(express.json())
 app.use((cors()))
 
