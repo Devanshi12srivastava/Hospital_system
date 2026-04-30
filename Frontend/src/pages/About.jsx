@@ -3,57 +3,80 @@ import { assets } from "../assets/assets/assets";
 
 const About = () => {
   return (
-    <div>
-      <div className="text-center text-2xl pt-10 text-gray-700 font-medium">
-        <p>
-           ABOUT <span>US</span>
-        </p>
-      </div>
-      <div className="my-9 flex flex-col md:flex-row gap-12">
-        <img className="w-full md:max-w-90 " src={assets.about_image} alt="" />
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-700">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus
-            officiis ullam eius consequatur tempora quas dolore impedit
-            voluptas, expedita eum veritatis quisquam dignissimos laborum
-            eligendi vel voluptatum id itaque mollitia.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
-            aut voluptatem id voluptatibus cupiditate? Itaque at sed dolores
-            placeat quia libero nulla ad amet alias dolor? Nemo consequuntur
-            soluta numquam?
-          </p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Praesentium aperiam, aliquam debitis beatae maxime at impedit,
-            ratione deleniti consequatur blanditiis, hic perspiciatis mollitia?
-            Explicabo, laborum totam pariatur veritatis ipsum est. Adipisci
-            nesciunt nihil ipsum incidunt omnis harum totam cupiditate vel,
-            quasi illo veniam voluptas at ducimus ad facilis ex atque sapiente
-            excepturi quod doloribus laboriosam officiis sit laborum? Iure,
-            quia?
-          </p>
-        </div>
-      </div>
-      <div>
-        <p>Why choose Us</p>
-      </div>
-      <div className="flex flex-col md:flex-row mb-20">
-        <div className="border border-gray-300 px-10  py-16flex flex-col gap-5 text-[15px]">
-          <b>Effieciency</b>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa est architecto voluptatum laborum quisquam, dolorum necessitatibus soluta nobis quo aut aliquam asperio</p>
-        </div>
-        <div className="border border-gray-300 px-10  py-16flex flex-col gap-5 text-[15px]">
-          <b>Convience</b>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa est architecto voluptatum laborum quisquam, dolorum necessitatibus soluta nobis </p>
-        </div>
-        <div className="border border-gray-300 px-10  py-16flex flex-col gap-5 text-[15px]">
-          <b>personalization</b>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa est architecto voluptatum laborum quisquam, dolorum necessitatibus soluta nobis </p>
-        </div>
-      </div>
+   <div className="px-6 md:px-10 lg:px-20">
+
+  {/* Heading */}
+  <div className="text-center pt-12">
+    <p className="text-3xl font-semibold text-gray-800">
+      ABOUT <span className="text-blue-600">US</span>
+    </p>
+  </div>
+
+  {/* About Section */}
+  <div className="my-12 flex flex-col md:flex-row gap-10 items-center">
+
+    {/* Image */}
+    <img
+      className="w-full md:w-1/2 rounded-2xl shadow-md"
+      src={assets.about_image}
+      alt="about"
+    />
+
+    {/* Content */}
+    <div className="md:w-1/2 flex flex-col gap-5 text-gray-600 leading-7">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+        officiis ullam eius consequatur tempora quas dolore impedit voluptas.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
+        aut voluptatem id voluptatibus cupiditate? Itaque at sed dolores.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+        aperiam, aliquam debitis beatae maxime at impedit.
+      </p>
     </div>
+
+  </div>
+
+  {/* Why Choose Us */}
+  <div className="text-center mb-10">
+    <p className="text-2xl font-semibold text-gray-800">
+      Why Choose <span className="text-blue-600">Us</span>
+    </p>
+  </div>
+
+  {/* Cards */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+
+    <div className="bg-white border rounded-xl p-6 shadow-sm hover:shadow-lg transition">
+      <b className="text-lg text-gray-800">Efficiency</b>
+      <p className="text-sm text-gray-600 mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa est
+        architecto voluptatum laborum quisquam.
+      </p>
+    </div>
+
+    <div className="bg-white border rounded-xl p-6 shadow-sm hover:shadow-lg transition">
+      <b className="text-lg text-gray-800">Convenience</b>
+      <p className="text-sm text-gray-600 mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa est
+        architecto voluptatum laborum quisquam.
+      </p>
+    </div>
+
+    <div className="bg-white border rounded-xl p-6 shadow-sm hover:shadow-lg transition">
+      <b className="text-lg text-gray-800">Personalization</b>
+      <p className="text-sm text-gray-600 mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa est
+        architecto voluptatum laborum quisquam.
+      </p>
+    </div>
+
+  </div>
+
+</div>
   );
 };
 

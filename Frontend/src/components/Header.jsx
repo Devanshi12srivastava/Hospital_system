@@ -3,7 +3,7 @@ import { assets } from '../assets/assets/assets'
 
 const Header = () => {
   return (
-    <div className='flex flex-col md:flex-row flex-wrap bg-[#9E1C60]'>
+    <div className='flex flex-col md:flex-row flex-wrap bg-blue-900'>
       {/*....left...*/}
       <div className='md:w-1/3 flex flex-col items-start justify-center gap-4 py-10 px-8 m-auto'>
         <p className='text-3xl md:text-4xl lg-text-5xl font-semibold text-white -mx-60'>Book Appointment<br/>

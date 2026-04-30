@@ -17,3 +17,11 @@ export const appointmentBook = (
     { headers: { usertoken: token } },
   );
 };
+
+export const getMyAppointments=(backendUrl,token)=>{
+  return axios.get(`${backendUrl}/api/user/appointments`,{headers:{usertoken:token}})
+}
+
+export const cancelAppointments=(backendUrl,appointmentId,token)=>{
+  return axios.post(`${backendUrl}/api/user/cancel-appointment`,{appointmentId},{headers:{usertoken:token}})
+}

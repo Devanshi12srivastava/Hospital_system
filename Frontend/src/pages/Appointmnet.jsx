@@ -59,12 +59,26 @@ const Appointmnet = () => {
           hour: "2-digit",
           minute: "2-digit",
         });
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() + 1;
+        let year = currentDate.getFullYear();
 
-        timeSlot.push({
-          datetime: new Date(currentDate),
-          time: formattedTime,
-        });
+        const slotDate = day + "_" + month + "_" + year;
+        const slotTime = formattedTime;
 
+        const isSlotAvailable =
+          docInfo.slots_booked[slotDate] &&
+          docInfo.slots_booked[slotDate].includes(slotTime)
+            ? false
+            : true;
+
+        if (isSlotAvailable) {
+         timeSlot.push({
+            datetime: new Date(currentDate),
+            time: formattedTime,
+          });
+        }
+        
         // ✅ VERY IMPORTANT → increment
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
@@ -90,7 +104,7 @@ const Appointmnet = () => {
       const slotDate = day + "_" + month + "_" + year;
       console.log(slotDate);
 
-      const response = await appointmentBook (
+      const response = await appointmentBook(
         backendUrl,
         docId,
         slotDate,
@@ -101,9 +115,9 @@ const Appointmnet = () => {
       if (data.success) {
         toast.success(data.message);
         getDoctorsData();
-        naviagte("/my-appointment");
+        naviagte("/my-appointments");
       } else {
-        toast.error(error.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.log(error);
@@ -130,7 +144,7 @@ const Appointmnet = () => {
       <div className="flex flex-col sm:flex-row gap-4">
         <div>
           <img
-            className="bg-blue-600 w-full sm:max-w-72 rounded-lg"
+            className="bg-blue-900 w-full sm:max-w-72 rounded-lg"
             src={docInfo?.image}
             alt=""
           />

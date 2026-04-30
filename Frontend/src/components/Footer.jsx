@@ -2,40 +2,51 @@ import { assets } from "../assets/assets/assets";
 
 const Footer = () => {
   return (
-    <div className="md:mx-10">
-      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14my-10 mt-40 text-lg">
-        <div>
-          <img className="mb-5 w-40" src={assets.logo} alt="" />
-          <p className="mr-10 w-full md:w-2/3 text-gray-700 leading-6">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas
-            repellendus doloribus qui, voluptate rerum sed aliquam
-            necessitatibus accusamus a consequuntur, incidunt quaerat, sapiente
-            dolores minus omnis! Iure temporibus porro eaque
-          </p>
-        </div>
-        <div>
-          <p className="text-xl font-medium mb-5">company</p>
-          <ul className="flex flex-col gap-2 text-gray-700">
-            <li>Home</li>
-            <li>About us</li>
-            <li>Contact Us</li>
-            <li>Policy</li>
-          </ul>
-        </div>
-        <div>
-          <h1 className="text-xl font-medium mb-5">Get In Touch</h1>
-          <ul className="flex flex-col gap-2 text-gray-700">
-            <li>+91 55786767767</li>
-            <li>ertfgafg@g.com</li>
-          </ul>
-        </div>
-      </div>
-      <div></div>
-      <div className="mt-12">
-        <hr />
-        <p className="py-5 text-sm text-center">Copyright</p>
-      </div>
+    <div className="bg-gray-50 mt-20 px-6 md:px-10 pt-12 pb-6">
+
+  {/* Top Section */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-gray-700">
+
+    {/* Logo + About */}
+    <div>
+      <img className="mb-4 w-36" src={assets.logo} alt="logo" />
+      <p className="text-sm leading-6 text-gray-600">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+        repellendus doloribus qui, voluptate rerum sed aliquam
+        necessitatibus accusamus a consequuntur.
+      </p>
     </div>
+
+    {/* Company Links */}
+    <div>
+      <p className="text-lg font-semibold mb-4 text-gray-800">Company</p>
+      <ul className="flex flex-col gap-2 text-sm">
+        <li className="hover:text-blue-600 cursor-pointer">Home</li>
+        <li className="hover:text-blue-600 cursor-pointer">About Us</li>
+        <li className="hover:text-blue-600 cursor-pointer">Contact Us</li>
+        <li className="hover:text-blue-600 cursor-pointer">Privacy Policy</li>
+      </ul>
+    </div>
+
+    {/* Contact */}
+    <div>
+      <p className="text-lg font-semibold mb-4 text-gray-800">
+        Get In Touch
+      </p>
+      <ul className="flex flex-col gap-2 text-sm">
+        <li>📞 +91 55786767767</li>
+        <li>📧 support@healthcare.com</li>
+      </ul>
+    </div>
+
+  </div>
+
+  {/* Divider */}
+  <div className="mt-10 border-t pt-5 text-center text-sm text-gray-500">
+    © {new Date().getFullYear()} Healthcare System. All rights reserved.
+  </div>
+
+</div>
   );
 };
 

@@ -58,73 +58,121 @@ navigate('/')
 
   return (
     <>
-      <form onSubmit={sumbitForm} className="min-h-[80vh] flex items-center">
-        <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-100 border border-gray-200 bg-white shadow-sm rounded-xl text-gray-600">
-          <p className="text-2xl font-semibold">
-            {" "}
-            {state === "Sign Up" ? "Create Account" : "login"}
-          </p>
-          <p className="text-gray-800 text-lg ">please sign up</p>
-          {state == "Sign Up" && (
-            <div className="w-full mt-8">
-              <p className="text-gray-800 font-medium text-lg mt-2">
-                Full Name
-              </p>
-              <input
-                className="border border-zinc-300 rounded-lg w-full p-2 mt-1"
-                type="text"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
-            </div>
-          )}
+     <form
+  onSubmit={sumbitForm}
+  className="min-h-screen flex flex-col lg:flex-row"
+>
 
-          <div>
-            <div className="w-full">
-              <p className="text-gray-800 font-medium text-lg mt-2">Email</p>
-              <input
-                className="border border-zinc-300 rounded-lg w-full p-2 mt-1"
-                type="text"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-              />
-            </div>
-            <div className="w-full">
-              <p className="text-gray-800 font-medium text-lg mt-2">Password</p>
-              <input
-                className="border border-zinc-300 rounded-lg w-full p-2 mt-1"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-blue-400 px-5 py-3 w-full rounded-lg mt-10 text-white font-medium"
-            >
-              {state == "Sign Up" ? "Create Account" : "login"}
-            </button>
-            {state === "Sign Up" ? (
-              <p>
-                Already have account{" "}
-                <span
-                  onClick={() => setState("login")}
-                  className="text-blue-600 underline cursor-pointer"
-                >
-                  login here
-                </span>
-              </p>
-            ) : (
-              <p
-                onClick={() => setState("Sign Up")}
-                className="text-blue-600 underline cursor-pointer"
-              >
-                Create Account? <span>click here</span>
-              </p>
-            )}
-          </div>
+  {/* LEFT SIDE (User Content) */}
+  <div className="hidden lg:flex flex-1 bg-linear-to-br from-blue-500 to-blue-600 text-white p-10 flex-col justify-center">
+    
+    <h1 className="text-3xl font-bold mb-4">
+      Book Appointments Easily
+    </h1>
+
+    <p className="text-lg text-green-100 mb-6">
+      Connect with experienced doctors and manage your health anytime.
+    </p>
+
+    <ul className="space-y-3 text-green-100">
+      <li>✔ Book appointments in seconds</li>
+      <li>✔ Choose from top specialists</li>
+      <li>✔ Track your bookings easily</li>
+      <li>✔ Secure & fast experience</li>
+    </ul>
+
+  </div>
+
+  {/* RIGHT SIDE (FORM) */}
+  <div className="flex-1 flex items-center justify-center bg-gray-50 px-4 py-10">
+
+    <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+
+      {/* Title */}
+      <p className="text-2xl font-semibold text-center mb-2">
+        {state === "Sign Up" ? "Create Account" : "Login"}
+      </p>
+
+      <p className="text-center text-gray-500 mb-6">
+        {state === "Sign Up"
+          ? "Join us to book appointments"
+          : "Welcome back! Please login"}
+      </p>
+
+      {/* Name (Sign Up only) */}
+      {state === "Sign Up" && (
+        <div className="mb-4">
+          <p className="text-sm text-gray-700 mb-1">Full Name</p>
+          <input
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+            type="text"
+            placeholder="Enter your name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+          />
         </div>
-      </form>
+      )}
+
+      {/* Email */}
+      <div className="mb-4">
+        <p className="text-sm text-gray-700 mb-1">Email</p>
+        <input
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+          type="email"
+          placeholder="Enter your email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+      </div>
+
+      {/* Password */}
+      <div className="mb-4">
+        <p className="text-sm text-gray-700 mb-1">Password</p>
+        <input
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+          type="password"
+          placeholder="Enter your password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
+      </div>
+
+      {/* Button */}
+      <button
+        type="submit"
+        className="w-full bg-linear-to-r from-blue-500 to-blue-600 text-white py-2 rounded-lg font-medium shadow-md hover:shadow-lg hover:scale-[1.02] transition-all"
+      >
+        {state === "Sign Up" ? "Create Account" : "Login"}
+      </button>
+
+      {/* Toggle */}
+      <p className="text-sm text-center mt-4 text-gray-600">
+        {state === "Sign Up" ? (
+          <>
+            Already have an account?{" "}
+            <span
+              onClick={() => setState("login")}
+              className="text-green-600 cursor-pointer font-medium hover:underline"
+            >
+              Login here
+            </span>
+          </>
+        ) : (
+          <>
+            Create Account?{" "}
+            <span
+              onClick={() => setState("Sign Up")}
+              className="text-blue-600 cursor-pointer font-medium hover:underline"
+            >
+              Click here
+            </span>
+          </>
+        )}
+      </p>
+    </div>
+
+  </div>
+</form>
     </>
   );
 };

@@ -7,3 +7,17 @@
   @apply:hidden
 }
 
+.inputStyle {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-top: 4px;
+  background: #f9fafb;
+}
+
+.inputStyle:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #fff;
+}

@@ -23,6 +23,7 @@ const AppContextProvider = (props) => {
         setDoctorData(data.doctors);
         toast.success(data.message);
         console.log(data);
+       
       } else {
         toast.error(data);
       }
