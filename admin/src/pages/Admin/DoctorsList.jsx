@@ -56,7 +56,7 @@ const[available,setAvailable]=useState(true);
       <div className="m-5 max-h-[90vh] overflow-y-scroll">
         <h1 className="text-lg font-medium">All Doctors</h1>
         <div className="w-full flex flex-wrap gap-4 pt-5 gap-y-6">
-          {doctorData.map((item, idx) => (
+          {doctorData?.map((item, idx) => (
             <div
               className="border border-blue-200 rounded-xl max-w-56 overflow-hidden cursor-pointer"
               key={idx}

@@ -37,58 +37,100 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={onSubmitLogin} className="min-h-[80vh] flex items-center">
-        <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-85 sm:min-w-96 border-fuchsia-200 rounded-2xl text-black trxt-sm shadow-lg">
-          <p className="text-2xl font-semibold m-auto ">
-            <span className="text-blue-600">{state}</span> Login
-          </p>
-          <div>
-            <p className="text-gray-700 font-medium text-base">Email</p>
-            <input
-              className="border border-gray-200 rounded-xl w-full p-2 mt-1"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <p className="text-gray-700 font-medium text-base">Password</p>
-            <input
-              className="border border-gray-200 rounded-xl w-full p-2 mt-1"
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>{" "}
-          <button
-            className="bg-blue-400 text-white w-full py-2 rounded-md text-base cursor-pointer hover:bg-blue-500"
-            onClick={() => console.log("Clicked")}
-          >
-            Login
-          </button>
-          {state === "Admin" ? (
-            <p>
-              Doctor login?{" "}
-              <span
-                className="cursor-pointer text-blue-700 underline"
-                onClick={() => setState("Doctor")}
-              >
-                Click here
-              </span>
-            </p>
-          ) : (
-            <p>
-              Admin login?{" "}
-              <span
-                className="cursor-pointer text-blue-700 underline"
-                onClick={() => setState("Admin")}
-              >
-                Click login
-              </span>
-            </p>
-          )}
-        </div>
-      </form>
+     <form
+  onSubmit={onSubmitLogin}
+  className="min-h-screen flex flex-col lg:flex-row"
+>
+
+  {/* LEFT SIDE */}
+  <div className="hidden lg:flex flex-1 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-10 flex-col justify-center">
+    
+    <h1 className="text-3xl font-bold mb-4">
+      Welcome to Healthcare System
+    </h1>
+
+    <p className="text-lg mb-6 text-blue-100">
+      Manage doctor appointments efficiently with our smart system.
+    </p>
+
+    <ul className="space-y-3 text-blue-100">
+      <li>✔ Easy appointment booking</li>
+      <li>✔ Real-time doctor availability</li>
+      <li>✔ Secure patient data</li>
+      <li>✔ Admin & Doctor dashboard</li>
+    </ul>
+
+  </div>
+
+  {/* RIGHT SIDE (LOGIN) */}
+  <div className="flex-1 flex items-center justify-center bg-gray-50 px-4 py-10">
+
+    <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
+
+      <p className="text-2xl font-semibold text-center mb-6">
+        <span className="text-blue-600">{state}</span> Login
+      </p>
+
+      {/* Email */}
+      <div className="mb-4">
+        <p className="text-gray-700 text-sm mb-1">Email</p>
+        <input
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
+      {/* Password */}
+      <div className="mb-4">
+        <p className="text-gray-700 text-sm mb-1">Password</p>
+        <input
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      {/* Button */}
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-all"
+      >
+        Login
+      </button>
+
+      {/* Switch */}
+      <p className="text-sm text-center mt-4 text-gray-600">
+        {state === "Admin" ? (
+          <>
+            Doctor login?{" "}
+            <span
+              className="text-blue-600 cursor-pointer hover:underline"
+              onClick={() => setState("Doctor")}
+            >
+              Click here
+            </span>
+          </>
+        ) : (
+          <>
+            Admin login?{" "}
+            <span
+              className="text-blue-600 cursor-pointer hover:underline"
+              onClick={() => setState("Admin")}
+            >
+              Click here
+            </span>
+          </>
+        )}
+      </p>
+    </div>
+
+  </div>
+</form>
     </>
   );
 };
