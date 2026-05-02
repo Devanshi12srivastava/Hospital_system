@@ -1,5 +1,5 @@
 import Login from "./pages/login";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AdminContext } from "./context/AdminContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout";
@@ -9,6 +9,10 @@ import AddDoctor from "./pages/Admin/AddDoctor";
 import DoctorsList from "./pages/Admin/DoctorsList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DoctorContext } from "./context/DoctorContaext";
+import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
+import DoctorAppointment from "./pages/Doctor/DoctorAppointment";
+import Doctorprofile from "./pages/Doctor/Doctorprofile";
 
 
 const router = createBrowserRouter([
@@ -19,7 +23,11 @@ const router = createBrowserRouter([
      { path:'admin-dashboard',element:<Dashboard/>},
      {path:'all-appointment', element:<AllApointment/>},
      {path:'add-doctor',element:<AddDoctor/>},
-     {path:'doctor-list',element:<DoctorsList/>}
+     {path:'doctor-list',element:<DoctorsList/>},
+
+     //doctor page route
+     {path:'doctor-dashboard',element:<DoctorDashboard/>},{path:'doctor-appointment',element:<DoctorAppointment/>},
+     {path:'doctor-profile', element:<Doctorprofile/>}
     ],
   },
 ]);
@@ -27,7 +35,8 @@ const router = createBrowserRouter([
 const App = () => {
   
   const { adminToken } = useContext(AdminContext);
-  return adminToken ? (
+  const {dToken} = useContext(DoctorContext)
+  return adminToken || dToken ? (
     
     <div className="bg-gray-100">
             

@@ -2,11 +2,13 @@ import React, { useContext } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets_admin/assets'
+import { DoctorContext } from '../context/DoctorContaext'
 
 const Sidebar = () => {
 
 
 const {adminToken} = useContext(AdminContext)
+const {dToken} =useContext(DoctorContext)
 
   return (
     <>
@@ -31,6 +33,30 @@ const {adminToken} = useContext(AdminContext)
        <NavLink  className={({isActive})=>`flex items-center gap-3 py-3 px-7 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-blue-400 border-r-4 border-blue-500':""}`}to={'/doctor-list'} >
         <img src={assets.people_icon} alt=""/>
         <p>Doctors List</p>
+      </NavLink>
+
+    </ul>
+   }
+
+
+
+
+
+   {
+    dToken && <ul className='text-zinc-800 mt-5'>
+      <NavLink className={({isActive})=>`flex items-center gap-3 py-3 px-7  md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-blue-400 px-5 border-r-4 border-blue-400':""}`} to={'/doctor-dashboard'} >
+        <img src={assets.home_icon} alt=""/>
+        <p className='hidden md:block'>Dashboard</p>
+      </NavLink>
+
+       <NavLink className={({isActive})=>`flex items-center gap-3 py-3 px-7 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-blue-400 border-r-4 border-blue-400':""}`} to={'/doctor-appointment'}>
+        <img src={assets.appointment_icon} alt=""/>
+        <p className='hidden md:block'>Appointments</p>
+      </NavLink>
+
+       <NavLink  className={({isActive})=>`flex items-center gap-3 py-3 px-7 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-blue-400 border-r-4 border-blue-500':""}`}to={'/doctor-profile'} >
+        <img src={assets.people_icon} alt=""/>
+        <p className='hidden md:block'>Profile</p>
       </NavLink>
 
     </ul>

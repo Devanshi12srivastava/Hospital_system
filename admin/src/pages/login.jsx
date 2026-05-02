@@ -2,13 +2,17 @@ import { useContext } from "react";
 import { useState } from "react";
 import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContaext";
+import { doctorLogin } from "../api/DoctorLogin";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [state, setState] = useState("Admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { setAdminToken, backendUrl } = useContext(AdminContext);
-
+const {setDToken}=useContext(DoctorContext)
   const onSubmitLogin = async (e) => {
     e.preventDefault();
     setEmail("");
@@ -22,12 +26,30 @@ const Login = () => {
           email,
           password,
         });
-        console.log("Full server response:", data);
+      ;
+        if(data.success){
         localStorage.setItem("AdminToken", data.token);
         setAdminToken(data.token);
-      } else {
+          console.log("Full server response:", data)
+        }
+       else {
+        toast.error(data.message)
       }
-    } catch (err) {
+    }else{
+       const payload={email,password}
+      const {data} =await doctorLogin(backendUrl,payload)
+      if(data.success){
+        localStorage.setItem('dToken',data.token)
+        setDToken(data.token)
+        console.log("token",data.token)
+      
+        
+      }
+      else{
+        toast.error(data.message)
+      }
+    } 
+  }catch (err) {
       console.log(
         "Login error:",
         err.response ? err.response.data : err.message,
@@ -43,7 +65,7 @@ const Login = () => {
 >
 
   {/* LEFT SIDE */}
-  <div className="hidden lg:flex flex-1 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-10 flex-col justify-center">
+  <div className="hidden lg:flex flex-1 bg-linear-to-br from-blue-600 to-indigo-700 text-white p-10 flex-col justify-center">
     
     <h1 className="text-3xl font-bold mb-4">
       Welcome to Healthcare System
@@ -98,7 +120,7 @@ const Login = () => {
       {/* Button */}
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-all"
+        className="w-full bg-linear-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-lg shadow-md cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all"
       >
         Login
       </button>
