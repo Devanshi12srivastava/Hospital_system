@@ -15,9 +15,9 @@ const TopDoctors = () => {
         laboriosam
       </p>
       <div className="w-full  grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 pt-5 gap-y-6 px-4 sm:px-0">
-        {doctors.slice(0, 4).map((item, idx) => (
+        {doctors.slice(0, 6).map((item, idx) => (
           <div onClick={()=>navigate(`/appointment/${item._id}`)} className="border border-blue-200 my-10 rounded-2xl overflow-hidden cursor-pointer" key={idx}>
-            <img className="bg-[#e7d3dd]" src={item.image} alt="" />
+            <img className="bg-blue-100" src={item.image} alt="" />
             <div className="p-4">
               <div className="flex items-center gap-2 text-sm text-center">
                 <p className="w-4 h-4 bg-green-300 rounded-full"></p><p>Available</p>

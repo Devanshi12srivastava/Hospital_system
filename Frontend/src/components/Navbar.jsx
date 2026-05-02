@@ -78,7 +78,7 @@ const logout=()=>{
         My Appointments
       </p>
 
-      <p onClick={logout} className="hover:text-red-500 cursor-pointer py-1">
+      <p onClick={logout} className="hover:text-red-500 hover:cursor-pointer py-1">
         Logout
       </p>
 

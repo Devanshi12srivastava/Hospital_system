@@ -140,7 +140,7 @@ navigate('/')
       {/* Button */}
       <button
         type="submit"
-        className="w-full bg-linear-to-r from-blue-500 to-blue-600 text-white py-2 rounded-lg font-medium shadow-md hover:shadow-lg hover:scale-[1.02] transition-all"
+        className="w-full bg-linear-to-r from-blue-500 to-blue-600 text-white py-2 rounded-lg font-medium shadow-md cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all"
       >
         {state === "Sign Up" ? "Create Account" : "Login"}
       </button>
