@@ -98,7 +98,10 @@ const userProfileUpdate = async (req, res) => {
     }
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
-      { name, phone, address, dob },
+      {  name,
+  phone,
+  address,
+  dob: dob === "null" || dob === "" ? null : dob },
       { new: true },
     );
     console.log("updates", updatedUser);
