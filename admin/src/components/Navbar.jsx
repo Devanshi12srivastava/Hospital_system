@@ -21,7 +21,7 @@ const navigate= useNavigate()
   return (
     <div className="flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white">
       <div className='flex items-center gap-2 text-sm'>
-        <img src={assets.admin_logo} alt=""/> 
+        <img className ="w-40" src={assets.Doc_logo} alt=""/> 
         <p>{adminToken ? 'Admin':'Doctor'}</p>
       </div>
       <button onClick={logout} className='bg-blue-600 text-white text-sm px-10 py-2 rounded-2xl cursor-pointer'>Logout</button>
