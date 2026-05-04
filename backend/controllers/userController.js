@@ -255,37 +255,41 @@ const paymentRazorpay = async (req, res) => {
 //apit o verify payment
 
 const verifyPayment = async (req, res) => {
-  console.log("BODY:", req.body);
   try {
-    const razorpayInstance = getRazorpayInstance(); 
-    const { razorpay_order_id } = req.body;
+    const { razorpay_payment_id, razorpay_order_id } = req.body;
 
-    if (!razorpay_order_id) {
-      return res.json({ success: false, message: "order id missing" });
-    }
+    const razorpayInstance = getRazorpayInstance();
 
-    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+    // payment fetch karo
+    const payment = await razorpayInstance.payments.fetch(
+      razorpay_payment_id
+    );
 
-    console.log(orderInfo)
-  if (orderInfo.status === "paid") {
-      await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {
+    console.log("PAYMENT:", payment);
+
+    if (payment.status === "captured") {
+      // order fetch karo appointment id nikalne ke liye
+      const order = await razorpayInstance.orders.fetch(
+        razorpay_order_id
+      );
+
+      await appointmentModel.findByIdAndUpdate(order.receipt, {
         payment: true,
       });
 
-      return res.status(200).json({
+      return res.json({
         success: true,
-        message: "Payment Successful",
+        message: "Payment Success",
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: "Payment Failed",
       });
     }
-
-    return res.status(200).json({
-      success: false,
-      message: "Payment Failed",
-    });
-
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 export {

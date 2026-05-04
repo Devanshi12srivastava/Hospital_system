@@ -119,7 +119,13 @@ const appointmentComplete = async (req, res) => {
         message: "Appointment not found",
       });
     }
-
+//(payment check)
+if (!appointmentData.payment) {
+  return res.status(400).json({
+    success: false,
+    message: "Please complete payment first",
+  });
+}
     if (appointmentData.docId.toString() === docId) {
       await appointmentModel.findByIdAndUpdate(appointmentId, {
         isCompleted: true,
