@@ -3,12 +3,14 @@ import { allLatestAppointment } from "../../api/Allappointment";
 import { AdminContext } from "../../context/AdminContext";
 import { assets } from "../../assets/assets_admin/assets";
 import { AppContext } from "../../context/AppContext";
+import { appointmentCancelApi } from "../../api/CancelApp";
+import { DoctorContext } from "../../context/DoctorContaext";
 
 const Dashboard = () => {
   const { backendUrl, adminToken } = useContext(AdminContext);
   const { slotDateFormat } = useContext(AppContext);
   const [dashboardAppointData, setdashboardAppointData] = useState(false);
-
+const {AppCancel} = useContext(DoctorContext)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -44,7 +46,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Appointments */}
+       
           <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow hover:shadow-md transition">
             <img className="w-12 h-12" src={assets.appointment_icon} alt="" />
             <div>
@@ -55,7 +57,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Patients */}
           <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow hover:shadow-md transition">
             <img className="w-12 h-12" src={assets.patients_icon} alt="" />
             <div>
@@ -66,8 +67,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* Latest Bookings Section */}
+ 
         <div className="mt-8 bg-white rounded-2xl shadow">
           <div className="flex items-center gap-3 px-6 py-4 border-b">
             <img className="w-6" src={assets.list_icon} alt="" />
@@ -99,9 +99,9 @@ const Dashboard = () => {
                 </div>
                 {item.cancelled === true ? (
                   <p className="text-red-500 text-xs font-medium">Cancelled</p>
-                ) : (
+                ) : item.isCompleted ? <p className="text-green-600 text-xs font-medium">Completed</p>:(
                   <img
-                    onClick={() => AppointCancel(item._id)}
+                    onClick={() => AppCancel(item._id)}
                     className="w-6 h-6 hover:scale-110 transition cursor-pointer"
                     src={assets.cancel_icon}
                     alt="cancel"

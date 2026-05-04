@@ -7,30 +7,12 @@ import { assets } from "../../assets/assets_admin/assets";
 
 
 const DoctorAppointment = () => {
-  const [docAppointment, setDocAppoitment] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+
   const { dToken, backendUrl } = useContext(DoctorContext);
 
   const {calculateAge,slotDateFormat,AppComplete,AppCancel}=useContext(AppContext)
 
-  const AppointmentDoctor = async (docId) => {
-    try {
-      setLoading(true);
-      const { data } = await doctorAppointments(backendUrl, dToken);
-      if (data.success) {
-        setDocAppoitment(data.appointments);
-        console.log(data.appointments);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.log(error.message);
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
 
 
 
@@ -100,7 +82,7 @@ const DoctorAppointment = () => {
         <p className="text-green-600 font-medium">
           ₹{item.amount}
         </p>
-        {item.cancelled ? <p className="text-red-600 font-semibold text-sm">Cancelled</p> : item.isCompleted ? <p className="text-green-600 font-semibold text-sm">Completed</p>:<div className="flex gap-2">
+         {item.cancelled ? <p className="text-red-600 font-semibold text-sm">Cancelled</p> : item.isCompleted ? <p className="text-green-600 font-semibold text-sm">Completed</p>:<div className="flex gap-2">
           <img onClick={()=>AppCancel(item._id)}
             className="w-10 cursor-pointer hover:scale-110 transition"
             src={assets.cancel_icon}

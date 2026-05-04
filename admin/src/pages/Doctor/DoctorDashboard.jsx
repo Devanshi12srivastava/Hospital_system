@@ -13,7 +13,7 @@ const DoctorDashboard = () => {
 
   const { slotDateFormat } = useContext(AppContext);
 
-  const {AppCancel,AppComplete}=useContext(DoctorContext)
+  const { AppCancel, AppComplete ,AppointmentDoctor} = useContext(DoctorContext);
   const getDashBoardData = async () => {
     try {
       setLoading(true);
@@ -99,26 +99,43 @@ const DoctorDashboard = () => {
                 />
 
                 <div className="flex-1">
-                  <p className="font-medium text-gray-800">
-                    {item.name}
-                  </p>
+                  <p className="font-medium text-gray-800">{item.name}</p>
 
                   <p className="text-sm text-gray-400">
                     {slotDateFormat(item.slotDate)} | {item.slotTime}
                   </p>
                 </div>
-               {item.cancelled ? <p className="text-red-600 font-semibold text-sm">Cancelled</p> : item.isCompleted ? <p className="text-green-600 font-semibold text-sm">Completed</p>:<div className="flex gap-2">
-                         <img onClick={()=>AppCancel(item._id)}
-                           className="w-10 cursor-pointer hover:scale-110 transition"
-                           src={assets.cancel_icon}
-                           alt="cancel"
-                         />
-                         <img onClick={()=>AppComplete(item._id)}
-                           className="w-10 cursor-pointer hover:scale-110 transition"
-                           src={assets.tick_icon}
-                           alt="tick"
-                         />
-                       </div>}
+                {item.cancelled ? (
+                  <p className="text-red-600 font-semibold text-sm">
+                    Cancelled
+                  </p>
+                ) : item.isCompleted ? (
+                  <p className="text-green-600 font-semibold text-sm">
+                    Completed
+                  </p>
+                ) : (
+                  <div className="flex gap-2">
+                    {/* ✅ Tick only if payment done */}
+                    {item.payment ? (
+                      <img
+                        onClick={() => AppComplete(item._id)}
+                        className="w-10 cursor-pointer hover:scale-110 transition"
+                        src={assets.tick_icon}
+                        alt="complete"
+                      />
+                    ) : (
+                      <p className="text-xs text-orange-500">Payment Pending</p>
+                    )}
+
+                    {/* Cancel always allowed */}
+                    <img
+                      onClick={() => AppCancel(item._id)}
+                      className="w-10 cursor-pointer hover:scale-110 transition"
+                      src={assets.cancel_icon}
+                      alt="cancel"
+                    />
+                  </div>
+                )}
                 {/* Status */}
               </div>
             ))}

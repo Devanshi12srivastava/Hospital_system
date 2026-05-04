@@ -38,7 +38,7 @@ const AllApointment = () => {
     const data = response?.data;
     console.log("data", data);
     if (data.success) {
-      toast.success(data.message);
+    
       getAllAppointments();
     } else {
       toast.error(data.message);
@@ -113,7 +113,7 @@ const AllApointment = () => {
             <p className="text-green-600 font-medium">₹{item.docData.fees}</p>
             {item.cancelled === true ? (
               <p className="text-rose-800 text-xs font-medium">Cancelled</p>
-            ) : (
+            ) : item.isCompleted ? <p className="text-green-600 text-xs font-medium">Completed</p>:(
               <img
                 onClick={() => AppointCancel(item._id)}
                 className="w-6 h-6 hover:scale-110 transition cursor-pointer"
