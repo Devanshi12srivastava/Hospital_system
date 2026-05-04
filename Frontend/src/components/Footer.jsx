@@ -9,7 +9,7 @@ const Footer = () => {
 
     {/* Logo + About */}
     <div>
-      <img className="mb-4 w-36" src={assets.logo} alt="logo" />
+      <img className="mb-4 w-36" src={assets.Doc_logo} alt="logo" />
       <p className="text-sm leading-6 text-gray-600">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
         repellendus doloribus qui, voluptate rerum sed aliquam

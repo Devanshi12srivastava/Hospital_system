@@ -20,7 +20,7 @@ const logout=()=>{
    <div className="flex items-center justify-between py-5 px-6 md:px-10 border-b bg-white shadow-sm sticky top-0 z-50">
 
   {/* Logo */}
-  <img className="w-40 cursor-pointer" src={assets.logo} alt="logo" />
+  <img className="w-40 cursor-pointer" src={assets.Doc_logo} alt="logo" />
 
   {/* Desktop Menu */}
   <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
