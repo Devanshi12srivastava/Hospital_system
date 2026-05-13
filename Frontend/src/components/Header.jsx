@@ -1,27 +1,53 @@
 import React from 'react'
 import { assets } from '../assets/assets/assets'
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div className='flex flex-col md:flex-row flex-wrap bg-blue-900'>
-      {/*....left...*/}
-      <div className='md:w-1/3 flex flex-col items-start justify-center gap-4 py-10 px-8 m-auto'>
-        <p className='text-3xl md:text-4xl lg-text-5xl font-semibold text-white -mx-60'>Book Appointment<br/>
-        With Trusted Doctors</p>
-      
-      <div className='flex flex-col md:flex-row items-center gap-3 text-white font-semibold'>
-        <img className="w-28" src={assets.group_profiles}/>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio quisquam voluptatem <br className='hidden sm:block'/>
-        fuga minima illum! Nihil ducimus vel quaerat. Exercitationem autem nihil adipisci nobis velit hic quae consequuntur illo dolore necessitatibus!</p>
-      </div>
-      <a href="#speciality " className='flex items-center gap-2 px-6 py-3 rounded-4xl shadow-lg  bg-white text-gray-700 text-sm font-medium m-auto md:0 hover:scale-105 transition-all duration-300'>Book Appoinment <img className='w-3' src={assets.arrow_icon} alt=""/></a>
-    </div>
-     {/*....right...*/}
-    <div className='md:w-1/3 relative'>
-        <img className="w-md md:absolute bottom-0 rounded-lg" src={assets.header_img} alt=""/>
-    </div>
-    </div>
-  )
-}
+   <section
+  className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: `url(${assets.docBgImg})`,
+  }}
+>
+  {/* OVERLAY */}
+  <div className="absolute inset-0 bg-white/70"></div>
 
-export default Header
+  {/* CONTENT */}
+  <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 py-20">
+
+    <div className="w-full md:w-1/2">
+
+      <h1 className="text-[42px] md:text-[68px] leading-[1.1] font-bold text-blue-600 font-serif">
+        Making Health <br />
+        Care Better Together
+      </h1>
+
+      <p className="mt-6 text-gray-600 text-[15px] leading-7 max-w-lg">
+        Also you dry creeping beast multiply fourth abundantly our itself
+        signs bring our. Won form living. Whose dry you seasons divide
+        given gathering great in whose you'll greater let living form beast.
+      </p>
+
+      {/* BUTTONS */}
+      <div className="flex items-center gap-4 mt-8">
+
+        <Link to="/doctors"><button className="bg-blue-600 hover:bg-blue-700 transition text-white px-7 py-4 text-sm font-medium shadow-lg cursor-pointer">
+          Make An Appointment
+        </button></Link>
+
+        <button className="border border-gray-300 hover:border-blue-600 hover:text-blue-600 transition px-7 py-4 text-sm font-medium bg-white cursor-pointer">
+          Explore
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+  );
+};
+
+export default Header;
+
+

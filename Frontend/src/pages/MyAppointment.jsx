@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { cancelAppointments, getMyAppointments } from "../api/appointmentBookApi";
+import {
+  cancelAppointments,
+  getMyAppointments,
+} from "../api/appointmentBookApi";
 import { toast } from "react-toastify";
 import { PayOnline, verifyPay } from "../api/paymentApi";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { appointmentPdf } from "../api/pdfApi";
 
 const MyAppointment = () => {
   const { backendUrl, token, getDoctorsData } = useContext(AppContext);
-const navigate=useNavigate();
+  const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
+
   const months = [
     "",
     "Jan",
@@ -47,18 +53,21 @@ const navigate=useNavigate();
   };
   const cancelAppointment = async (appointmentId) => {
     try {
-      const response=await cancelAppointments(backendUrl,appointmentId,token)
+      const response = await cancelAppointments(
+        backendUrl,
+        appointmentId,
+        token,
+      );
       const data = response.data;
       if (data.success) {
-        toast.success("Appointment Cancelled")
-       await getUserAppointments()
-  await getDoctorsData()
-        console.log("success")
-       
-      }else{
-        toast.error(data.message)
+        toast.success("Appointment Cancelled");
+        await getUserAppointments();
+        await getDoctorsData();
+        console.log("success");
+      } else {
+        toast.error(data.message);
       }
-      
+
       console.log(appointmentId);
     } catch (error) {
       console.log(error);
@@ -66,57 +75,79 @@ const navigate=useNavigate();
     }
   };
 
+  const initpay = (order) => {
+    const option = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Appointment Payment",
+      description: "Appointment payment",
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (res) => {
+        console.log(res);
 
-  const initpay=(order)=>{
-const option={
-  key:import.meta.env.VITE_RAZORPAY_KEY_ID,
-  amount:order.amount,
-  currency:order.currency,
-  name:'Appointment Payment',
-  description:'Appointment payment',
-  order_id:order.id,
-  receipt:order.receipt,
-  handler:async(res)=>{
-console.log(res)
-try{
-  const response =await verifyPay(backendUrl,res,token);
-  const data=response.data
-  if(data.success){
-    getUserAppointments();
-    navigate('/my-appointments')
-  }
-}
-catch(err){
-console.log(err)
-toast.error(error.message)
-}
-  }
-}
-const rzp = new window.Razorpay(option)
-rzp.open()
-  }
+        try {
+          const response = await verifyPay(backendUrl, res, token);
+          const data = response.data;
+          if (data.success) {
+            getUserAppointments();
+            navigate("/my-appointments");
+          }
+        } catch (err) {
+          console.log(err);
+          toast.error(error.message);
+        }
+      },
+    };
+    const rzp = new window.Razorpay(option);
+    rzp.open();
+  };
 
-const appointmentRazorpay=async(appointmentId)=>{
-try {
-  const response=await PayOnline(backendUrl,appointmentId,token)
+  const appointmentRazorpay = async (appointmentId) => {
+    try {
+      const response = await PayOnline(backendUrl, appointmentId, token);
 
-  const data=response.data
-  if(data.success){
-    console.log(data.order)
-    initpay(data.order)
-  }
-
-} catch (error) {
+      const data = response.data;
+      if (data.success) {
+        console.log(data.order);
+        initpay(data.order);
+      }
+    } catch (error) {
       console.log(error);
       toast.error(error.message);
-}
-}
+    }
+  };
 
   useEffect(() => {
     if (token) {
       getUserAppointments();
     }
   }, [token]);
+
+  const downloadPDF = async (appointmentId) => {
+    try {
+      const response = await appointmentPdf(backendUrl,appointmentId,token)
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      const link = document.createElement("a");
+
+      link.href = url;
+
+      link.setAttribute("download", "appointment.pdf");
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      link.remove();
+    } catch (error) {
+      console.log(error);
+      toast.error("PDF download failed");
+    }
+  };
+
   return (
     <div>
       <p className="font-medium text-gray-700 px-5 py-6 border-b border-b-gray-300">
@@ -152,21 +183,48 @@ try {
                   </span>
                   {slotDateFormat(item.slotDate)} | {item.slotTime}
                 </p>
+                {item.payment && (
+                  <button
+                    onClick={() => downloadPDF(item._id)}
+                    className="mt-2 flex items-center gap-1 text-xs text-blue-800 font-semibold hover:text-blue-800 transition cursor-pointer"
+                  >
+                    📄 Download Receipt
+                  </button>
+                )}
               </div>
               <div></div>
               <div className="flex flex-col gap-2 justify-end">
-              {!item.cancelled && item.payment && !item.isCompleted && <button className="text-sm text-center sm:min-w-48  text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-blue-400 bg-white hover:bg-blue-500 hover:text-white transition-duration-200 cursor-pointer ">Paid</button>}
-                {!item.cancelled && !item.payment && !item.isCompleted && <button onClick={()=>appointmentRazorpay(item._id)}className="text-sm text-center sm:min-w-48  text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-blue-400 bg-white hover:bg-blue-500 hover:text-white transition-duration-200 cursor-pointer ">
-                  Pay Online
-                </button> }
-              {!item.cancelled && !item.isCompleted && <button
-                  onClick={() => cancelAppointment(item._id)}
-                  className="text-sm text-center sm:min-w-48 text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-red-500 bg-white hover:bg-red-500 hover:text-white transition-duration-200 cursor-pointer "
-                >
-                  Cancel Appointment
-                </button> }
-                {item.cancelled && !item.isCompleted && <button className="text-sm text-center sm:min-w-48 text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-red-700 bg-white hover:bg-red-600 hover:text-white transition-duration-200 cursor-pointer ">Appointment Cancelled</button>}
-               {item.isCompleted && <button className="text-sm text-center sm:min-w-48 text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-green-500 bg-white hover:bg-green-500 hover:text-white transition-duration-200 cursor-pointer ">Completed</button>}
+                {!item.cancelled && item.payment && !item.isCompleted && (
+                  <button className="text-sm text-center sm:min-w-48  text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-blue-400 bg-white hover:bg-blue-500 hover:text-white transition-duration-200 cursor-pointer ">
+                    Paid
+                  </button>
+                )}
+                {!item.cancelled && !item.payment && !item.isCompleted && (
+                  <button
+                    onClick={() => appointmentRazorpay(item._id)}
+                    className="text-sm text-center sm:min-w-48  text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-blue-400 bg-white hover:bg-blue-500 hover:text-white transition-duration-200 cursor-pointer "
+                  >
+                    Pay Online
+                  </button>
+                )}
+                {!item.cancelled && !item.isCompleted && (
+                  <button
+                    onClick={() => cancelAppointment(item._id)}
+                    className="text-sm text-center sm:min-w-48 text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-red-500 bg-white hover:bg-red-500 hover:text-white transition-duration-200 cursor-pointer "
+                  >
+                    Cancel Appointment
+                  </button>
+                )}
+                {item.cancelled && !item.isCompleted && (
+                  <button className="text-sm text-center sm:min-w-48 text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-red-700 bg-white hover:bg-red-600 hover:text-white transition-duration-200 cursor-pointer ">
+                    Appointment Cancelled
+                  </button>
+                )}
+                {item.isCompleted && (
+                  <button className="text-sm text-center sm:min-w-48 text-zinc-800 font-medium px-2 py-2 rounded-4xl border  border-green-500 bg-white hover:bg-green-500 hover:text-white transition-duration-200 cursor-pointer ">
+                    Completed
+                  </button>
+                )}
               </div>
             </div>
           ))}

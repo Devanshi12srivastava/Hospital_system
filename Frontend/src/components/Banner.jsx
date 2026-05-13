@@ -6,20 +6,52 @@ const Banner = () => {
     const navigate=useNavigate()
   return (
     <>
-    <div className='flex bg-blue-900 rounded px-6 sm:px-10 md:px-10 lg:px-10 my-20 md:mx-12'>
-    <div className='flex-1 py-8 sm:py-10 md:py-16 lg:py-24 lg:pl:5'>
-      <div className='text-xl sm:text-2xl md:text-3xl lg:text-5xl'>
-        <h1 className='text-white font-medium text-xl'>Book Appointment</h1>
-        <h1 className='mt-4 text-white font-medium'>With 150+ Trusted doctors</h1>
-      </div>
-      <button onClick={()=>{navigate("/login");scrollTo(0,0)}} className='bg-white text-lg sm:text-base text-gray-400 px-8 py-3 rounded-full mt-6 cursor-pointer'>Create Account</button>
+  <div className="my-20 mx-4 md:mx-12">
+
+  <div className="relative flex flex-col md:flex-row items-center justify-between rounded-3xl overflow-hidden border border-gray-100 shadow-xl bg-gradient-to-br from-white via-blue-50 to-indigo-50 px-6 sm:px-10 md:px-14 lg:px-16">
+
+    {/* soft background blur blobs */}
+    <div className="absolute -top-20 -left-20 w-72 h-72 bg-blue-200 opacity-30 blur-3xl rounded-full"></div>
+    <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-indigo-200 opacity-30 blur-3xl rounded-full"></div>
+
+    {/* Left Content */}
+    <div className="flex-1 py-12 md:py-20 relative z-10">
+
+      <h1 className="text-gray-900 font-semibold text-3xl sm:text-4xl lg:text-5xl leading-tight">
+        Book Your <span className="text-blue-600">Appointment</span>
+      </h1>
+
+      <p className="mt-4 text-gray-600 text-base sm:text-lg max-w-md">
+        Connect with 150+ trusted doctors and get instant consultation anytime, anywhere.
+      </p>
+
+      <button
+        onClick={() => { navigate("/login"); scrollTo(0, 0); }}
+        className="mt-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300"
+      >
+        Get Started
+      </button>
+
     </div>
 
-    <div className='hidden md:block md:w-1/2 lg:w-92.5 relative'>
-        <img className='w-full absolute bottom-0 right-0 max-w-md' src={assets.appointment_img} alt=""/>
-        
+    {/* Right Image */}
+    <div className="hidden md:flex flex-1 justify-end relative z-10">
+
+      <div className="relative max-w-md">
+
+        <img
+          src={assets.appointment_img}
+          alt="doctor"
+          className="w-full object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105"
+        />
+
+      </div>
+
     </div>
-    </div>
+
+  </div>
+
+</div>
     </>
   )
 }

@@ -4,23 +4,80 @@ import { assets } from '../assets/assets/assets'
 const Contact = () => {
 
   return (
-    <div>
-     <div className='text-center text-2xl text-gray-700 mt-12 font-medium'>
-      <p>CONTACT US</p>
-     </div>
-     <div className='my-11 flex flex-col justify-center md:flex-row gap-10 mb-25 text-sm'>
-      <img className="w-full md:w-90" src={assets.contact_image} alt=""/>
-      <div className='felx felx-col justify-center items-start gap-6'>
-       
-        <p className='font-semibold text-lg text-gray-700'>OUR OFFICE</p>
-        <p className='text-gray-600 mt-2'>noida sector -63 D-block</p>
-        <p className='text-gray-600 mt-2'>8767786786786</p>
-         <p className='text-gray-600 mt-2'>yhuhjn@gmail.com</p>
-         <p className='text-gray-600 mt-2'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla eaque error atque rem sequi dicta quibusdam delectus modi doloremque quia, laboriosam officia ea dolorem nihil aperiam</p>
-         <button className='bg-blue-400 px-5 py-3 mt-10 text-white border border-gray-600 text-sm font-medium'>Explore</button>
-      </div>
-     </div>
+    <div className="px-4 md:px-10 lg:px-20 py-16">
+
+  {/* Heading */}
+  <div className="text-center mb-12">
+    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 tracking-tight">
+      CONTACT US
+    </h2>
+    <div className="w-16 h-1 bg-blue-500 mx-auto mt-2 rounded-full"></div>
+  </div>
+
+  {/* Content */}
+  <div className="flex flex-col md:flex-row items-stretch gap-10">
+
+    {/* Image (smaller now) */}
+    <div className="w-full md:w-2/5">
+      <img
+        className="w-full h-full object-cover rounded-2xl shadow-md"
+        src={assets.contact_image}
+        alt=""
+      />
     </div>
+
+    {/* Info (bigger now) */}
+    <div className="w-full md:w-3/5 bg-white border border-gray-100 shadow-lg rounded-2xl p-6 md:p-10 flex flex-col justify-between">
+
+      <div>
+
+        <h3 className="font-semibold text-2xl text-gray-800 mb-6">
+          OUR OFFICE
+        </h3>
+
+        <div className="text-gray-600 text-sm md:text-base leading-relaxed space-y-5">
+
+          <div className="flex gap-3">
+            <span className="text-blue-600">📍</span>
+            <p>
+              Noida Sector - 63, D Block, Uttar Pradesh, India  
+              <br />
+              Near Tech Park & Metro Station
+            </p>
+          </div>
+
+          <div className="flex gap-3">
+            <span className="text-blue-600">📞</span>
+            <p>+91 87677 86786 (Appointment & Support)</p>
+          </div>
+
+          <div className="flex gap-3">
+            <span className="text-blue-600">✉️</span>
+            <p>support@yourclinic.com</p>
+          </div>
+
+          <div className="flex gap-3">
+            <span className="text-blue-600">⏰</span>
+            <p>Monday - Saturday: 9:00 AM - 8:00 PM</p>
+          </div>
+
+          <p className="text-gray-500 pt-4">
+            We are always available to assist you with appointments, doctor consultations, and medical support. Our goal is to provide fast, reliable and patient-friendly healthcare services anytime you need.
+          </p>
+
+        </div>
+
+      </div>
+
+      <button className="mt-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-7 py-3 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 w-fit">
+        Explore More
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
   )
 }
 

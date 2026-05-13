@@ -10,6 +10,7 @@ import Appointmnet from "./pages/Appointmnet";
 import About from "./pages/About";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Chatbot from "./pages/ChatBox";
 
 
 const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: "my-profile", element: <MyProfile /> },
       { path: "my-appointments", element: <MyAppointment /> },
       { path: "appointment/:docId", element: <Appointmnet /> },
+      // {path:"chat",element:<Chatbot />}
     ],
   },
 ]);
@@ -38,6 +40,7 @@ const App = () => {
   <>
    <ToastContainer/>
    <RouterProvider router={router} />;
+   <Chatbot/>
    </>
   )
 };
