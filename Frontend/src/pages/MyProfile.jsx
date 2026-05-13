@@ -53,51 +53,10 @@ const MyProfile = () => {
   return (
     userData && (
       <div className="flex justify-center px-4 mt-10">
-     <div className="w-full max-w-sm space-y-4">
+  
 
-  <h2 className="text-xl font-semibold text-gray-800">
-    My Receipts
-  </h2>
 
-  {
-    appointments.map((item) => (
 
-      <div
-        key={item._id}
-        className="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition"
-      >
-
-        {/* Left */}
-        <div>
-
-          <p className="font-medium text-gray-800">
-            {item.docData.name}
-          </p>
-
-          <p className="text-sm text-gray-500">
-            {item.slotDate}
-          </p>
-
-        </div>
-
-        {/* Right */}
-        {
-          item.payment && (
-
-            <button
-              onClick={() => downloadPDF(item._id)}
-              className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
-            >
-              📄
-            </button>
-          )
-        }
-
-      </div>
-    ))
-  }
-
-</div>
   <div className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 text-gray-700">
 
     {/* Profile Image */}
