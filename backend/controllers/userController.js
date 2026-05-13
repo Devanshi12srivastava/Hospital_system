@@ -7,6 +7,7 @@ import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
 import appointmentModel from "../models/appointementModel.js";
 import getRazorpayInstance from "../config/razorpay.js";
+import {sendAppointmentEmail,sendPaymentSuccessEmail}from "../utils/sendAppointmentEmail.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -98,10 +99,7 @@ const userProfileUpdate = async (req, res) => {
     }
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
-      {  name,
-  phone,
-  address,
-  dob: dob === "null" || dob === "" ? null : dob },
+      { name, phone, address, dob: dob === "null" || dob === "" ? null : dob },
       { new: true },
     );
     console.log("updates", updatedUser);
@@ -124,57 +122,112 @@ const userProfileUpdate = async (req, res) => {
 const bookAppointment = async (req, res) => {
   try {
     const { docId, slotDate, slotTime } = req.body;
-    const userId = req.userId;
-    console.log(slotTime);
-    console.log(req.body.slotTime);
-    if (!userId)
-      return res
-        .status(401)
-        .json({ success: false, message: "User not found" });
 
-    const docData = await doctorModel.findById(docId).select("-password");
-    if (!docData.available) {
-      return res.json({ success: false, message: "doctor not available" });
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+
+        message: "User not found",
+      });
     }
+
+    // doctor data
+    const docData = await doctorModel.findById(docId).select("-password");
+
+    // check doctor available
+    if (!docData.available) {
+      return res.json({
+        success: false,
+
+        message: "doctor not available",
+      });
+    }
+
     let slots_booked = docData.slots_booked;
-    //slots availablity
+
+    // slot availability
     if (slots_booked[slotDate]) {
       if (slots_booked[slotDate].includes(slotTime)) {
-        return res.json({ success: false, message: "slot not available" });
+        return res.json({
+          success: false,
+
+          message: "slot not available",
+        });
       } else {
         slots_booked[slotDate].push(slotTime);
       }
     } else {
       slots_booked[slotDate] = [];
+
       slots_booked[slotDate].push(slotTime);
     }
-    const userData = await userModel.findById(userId).select("-password");
-    delete docData.slots_booked;
 
+    // user data
+    const userData = await userModel.findById(userId).select("-password");
+
+    // appointment object
     const appointmentData = {
       userId,
+
       docId,
+
       userData,
+
       docData,
+
       amount: docData.fees,
+
       slotTime,
+
       slotDate,
+
       date: Date.now(),
     };
 
+    // save appointment
     const newAppointment = new appointmentModel(appointmentData);
-    const saved = await newAppointment.save();
-    console.log("SAVED DOC:", saved);
-    //save new slot data in docData
 
+    await newAppointment.save();
+
+    // update slots
     await doctorModel.findByIdAndUpdate(docId, { slots_booked });
-    res.json({ success: true, message: "appointmnet booked" });
+
+    // SEND EMAIL
+    const dateArray = slotDate.split("_");
+
+    const formattedDate = `${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`;
+    //email send
+    await sendAppointmentEmail({
+      email: userData.email,
+
+      patientName: userData.name,
+
+      doctorName: docData.name,
+
+      date: formattedDate,
+
+      time: slotTime,
+      paymentStatus: "Pending",
+    });
+
+    // response
+    res.json({
+      success: true,
+
+      message: "appointment booked",
+    });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: error.message });
+
+    res.status(500).json({
+      success: false,
+
+      message: error.message,
+    });
   }
 };
-
 //api to get user apointment for frontend
 
 const myAppointement = async (req, res) => {
@@ -227,7 +280,6 @@ console.log("SECRET:", process.env.RAZORPAY_KEY_SECRET);
 
 //payment
 
-
 const paymentRazorpay = async (req, res) => {
   try {
     const { appointmentId } = req.body;
@@ -240,14 +292,14 @@ const paymentRazorpay = async (req, res) => {
         message: "Appointment Cancelled or not found",
       });
     }
- const razorpayInstance = getRazorpayInstance();
+    const razorpayInstance = getRazorpayInstance();
     const options = {
       amount: appointmentData.amount * 100,
       currency: process.env.CURRENCY,
       receipt: appointmentId,
     };
 
-  const order = await razorpayInstance.orders.create(options);
+    const order = await razorpayInstance.orders.create(options);
 
     res.json({ success: true, order });
   } catch (error) {
@@ -255,7 +307,7 @@ const paymentRazorpay = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-//apit o verify payment
+//api to verify payment
 
 const verifyPayment = async (req, res) => {
   try {
@@ -264,22 +316,31 @@ const verifyPayment = async (req, res) => {
     const razorpayInstance = getRazorpayInstance();
 
     // payment fetch karo
-    const payment = await razorpayInstance.payments.fetch(
-      razorpay_payment_id
-    );
+    const payment = await razorpayInstance.payments.fetch(razorpay_payment_id);
 
     console.log("PAYMENT:", payment);
 
     if (payment.status === "captured") {
       // order fetch karo appointment id nikalne ke liye
-      const order = await razorpayInstance.orders.fetch(
-        razorpay_order_id
-      );
+      const order = await razorpayInstance.orders.fetch(razorpay_order_id);
+const appointmentId = order.receipt;
 
+      //  fetch appointment data (IMPORTANT FIX)
+      const appointment = await appointmentModel.findById(appointmentId);
+      // payment true
+appointment.payment = true;
+await appointment.save();
       await appointmentModel.findByIdAndUpdate(order.receipt, {
         payment: true,
       });
-
+     // send email 
+      await sendPaymentSuccessEmail({
+        email: appointment.userData.email,
+        patientName: appointment.userData.name,
+        doctorName: appointment.docData.name,
+        amount: appointment.amount,
+      });
+      console.log("Payment email function called");
       return res.json({
         success: true,
         message: "Payment Success",
@@ -291,7 +352,7 @@ const verifyPayment = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+  console.log("EMAIL ERROR:", error.message);
     res.json({ success: false, message: error.message });
   }
 };
@@ -302,5 +363,7 @@ export {
   userProfileUpdate,
   bookAppointment,
   myAppointement,
-  cancelappointments,paymentRazorpay,verifyPayment
+  cancelappointments,
+  paymentRazorpay,
+  verifyPayment,
 };

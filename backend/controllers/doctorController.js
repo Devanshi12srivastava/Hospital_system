@@ -119,13 +119,13 @@ const appointmentComplete = async (req, res) => {
         message: "Appointment not found",
       });
     }
-//(payment check)
-if (!appointmentData.payment) {
-  return res.status(400).json({
-    success: false,
-    message: "Please complete payment first",
-  });
-}
+    //(payment check)
+    if (!appointmentData.payment) {
+      return res.status(400).json({
+        success: false,
+        message: "Please complete payment first",
+      });
+    }
     if (appointmentData.docId.toString() === docId) {
       await appointmentModel.findByIdAndUpdate(appointmentId, {
         isCompleted: true,
@@ -225,9 +225,9 @@ const doctorDashboard = async (req, res) => {
 const doctorProfile = async (req, res) => {
   try {
     const docId = req.docId;
-    const profileData=await doctorModel.findById((docId)).select('-password')
+    const profileData = await doctorModel.findById(docId).select("-password");
 
-    res.status(200).json({success:true,profileData})
+    res.status(200).json({ success: true, profileData });
   } catch (error) {
     {
       res.status(500).json({
@@ -240,12 +240,16 @@ const doctorProfile = async (req, res) => {
 
 //api to get update doctor profile for doctor panel
 
-const updateDoctorProfile = async(req,res)=>{
+const updateDoctorProfile = async (req, res) => {
   try {
-    const docId=req.docId;
-    const {fees,address,available} = req.body
-    const updateProfile= await doctorModel.findByIdAndUpdate(docId,{fees,address,available})
-    res.status(200).json({success:true,updateProfile})
+    const docId = req.docId;
+    const { fees, address, available } = req.body;
+    const updateProfile = await doctorModel.findByIdAndUpdate(docId, {
+      fees,
+      address,
+      available,
+    });
+    res.status(200).json({ success: true, updateProfile });
   } catch (error) {
     {
       res.status(500).json({
@@ -254,7 +258,7 @@ const updateDoctorProfile = async(req,res)=>{
       });
     }
   }
-}
+};
 export {
   changeAvailability,
   doctorList,
@@ -264,5 +268,5 @@ export {
   appointmentCancel,
   doctorDashboard,
   doctorProfile,
-  updateDoctorProfile
+  updateDoctorProfile,
 };
