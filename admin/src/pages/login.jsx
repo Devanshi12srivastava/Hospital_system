@@ -5,12 +5,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { DoctorContext } from "../context/DoctorContaext";
 import { doctorLogin } from "../api/DoctorLogin";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+
+
 const Login = () => {
   const [state, setState] = useState("Admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+const navigate=useNavigate()
   const { setAdminToken, backendUrl } = useContext(AdminContext);
 const {setDToken}=useContext(DoctorContext)
   const onSubmitLogin = async (e) => {
@@ -30,7 +32,9 @@ const {setDToken}=useContext(DoctorContext)
         if(data.success){
         localStorage.setItem("AdminToken", data.token);
         setAdminToken(data.token);
-          console.log("Full server response:", data)
+    navigate('/admin-dashboard')
+        console.log("Full server response:", data)
+        
         }
        else {
         toast.error(data.message)
@@ -41,6 +45,7 @@ const {setDToken}=useContext(DoctorContext)
       if(data.success){
         localStorage.setItem('dToken',data.token)
         setDToken(data.token)
+            navigate('/doctor-dashboard')
         console.log("token",data.token)
       
         
@@ -84,7 +89,7 @@ const {setDToken}=useContext(DoctorContext)
 
   </div>
 
-  {/* RIGHT SIDE (LOGIN) */}
+  
   <div className="flex-1 flex items-center justify-center bg-gray-50 px-4 py-10">
 
     <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">

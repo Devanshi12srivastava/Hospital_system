@@ -2,3 +2,17 @@
 ::-webkit-scrollbar{
     @apply hidden
 }
+body {
+  @apply bg-white;
+}
+*{
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+body {
+  background-color: #ffff; /* bg-gray-100 */
+}

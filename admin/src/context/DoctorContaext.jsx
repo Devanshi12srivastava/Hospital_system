@@ -61,9 +61,19 @@ const DoctorContextProvider=(props)=>{
      }
    }
 
-const value={
-dToken,setDToken,backendUrl,AppComplete,AppCancel,AppointmentDoctor
-}
+const value={ dToken,
+  setDToken,
+  backendUrl,
+
+  docAppointment,
+  setDocAppoitment,
+
+  AppComplete,
+  AppCancel,
+  AppointmentDoctor,
+
+  loading,
+  error,}
 
 
 return(

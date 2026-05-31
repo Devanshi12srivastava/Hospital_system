@@ -13,40 +13,59 @@ import { DoctorContext } from "./context/DoctorContaext";
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
 import DoctorAppointment from "./pages/Doctor/DoctorAppointment";
 import Doctorprofile from "./pages/Doctor/Doctorprofile";
-
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [{ index: true, element: <Dashboard/>},
-     { path:'admin-dashboard',element:<Dashboard/>},
-     {path:'all-appointment', element:<AllApointment/>},
-     {path:'add-doctor',element:<AddDoctor/>},
-     {path:'doctor-list',element:<DoctorsList/>},
-
-     //doctor page route
-     {path:'doctor-dashboard',element:<DoctorDashboard/>},{path:'doctor-appointment',element:<DoctorAppointment/>},
-     {path:'doctor-profile', element:<Doctorprofile/>}
-    ],
-  },
-]);
+import { Navigate } from "react-router-dom";
 
 const App = () => {
-  
   const { adminToken } = useContext(AdminContext);
-  const {dToken} = useContext(DoctorContext)
-  return adminToken || dToken ? (
-    
-    <div className="bg-gray-100">
-            
-  <ToastContainer />
+  const { dToken } = useContext(DoctorContext);
+
+  const router = createBrowserRouter([
+    {
+      path: "/login",
+      element: <Login />,
+    },
+
+    {
+      path: "/",
+      element:
+        adminToken || dToken ? (
+          <Layout />
+        ) : (
+          <Navigate to="/login" />
+        ),
+
+      children: [
+        { index: true, element: <Dashboard /> },
+
+        { path: "admin-dashboard", element: <Dashboard /> },
+
+        { path: "all-appointment", element: <AllApointment /> },
+
+        { path: "add-doctor", element: <AddDoctor /> },
+
+        { path: "doctor-list", element: <DoctorsList /> },
+
+        // doctor routes
+        { path: "doctor-dashboard", element: <DoctorDashboard /> },
+
+        {
+          path: "doctor-appointment",
+          element: <DoctorAppointment />,
+        },
+
+        {
+          path: "doctor-profile",
+          element: <Doctorprofile />,
+        },
+      ],
+    },
+  ]);
+
+  return (
+    <div className=" min-h-screen">
+      <ToastContainer />
       <RouterProvider router={router} />
     </div>
-  ) : (
-    <>
-      <Login />
-    </>
   );
 };
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createContext } from "react";
 
 export const AppContext = createContext();
@@ -27,6 +28,8 @@ return age
     "Nov",
     "Dec",
   ];
+const [error,setError]=useState(null);
+const[loading,setLoading]=useState(false)
 
   const slotDateFormat = (slotDate) => {
     const dateArray = slotDate.split("_");
@@ -34,7 +37,7 @@ return age
       dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
     );
   };
-const value = {calculateAge,slotDateFormat};
+const value = {calculateAge,slotDateFormat,error,setError,loading,setLoading};
 
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
