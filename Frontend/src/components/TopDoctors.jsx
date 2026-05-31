@@ -4,32 +4,103 @@ import { AppContext } from "../context/AppContext";
 
 const TopDoctors = () => {
     const navigate=useNavigate()
-    const {doctors}=useContext(AppContext)
+    const {doctors,doctorerror,pageLoading}=useContext(AppContext)
 
+    if (pageLoading) {
   return (
-    <div className="flex flex-col items-center gap-4 my-16 text-gray-800 py-12 px-10">
-      <h1 className="text-blue-600 font-medium text-3xl items-center">Your Top Doctors</h1>
-      <p className="sm:w-1/3 text-center text-lg">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo enim
-        reprehenderit eius expedita ipsa laudantium aliquid consequatur ratione
-        laboriosam
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-lg font-medium text-blue-600">
+        Loading Doctors...
       </p>
-      <div className="w-full  grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 pt-5 gap-y-6 px-4 sm:px-0">
-        {doctors.slice(0, 6).map((item, idx) => (
-          <div onClick={()=>navigate(`/appointment/${item._id}`)} className="border border-blue-200 my-10 rounded-2xl overflow-hidden cursor-pointer" key={idx}>
-            <img className="bg-blue-100" src={item.image} alt="" />
-            <div className="p-4">
-              <div className="flex items-center gap-2 text-sm text-center">
-                <p className="w-4 h-4 bg-green-300 rounded-full"></p><p>Available</p>
-              </div>
-              <p className="text-gray-900 text-lg font-medium">{item.name}</p>
-              <p className="text-gray-800 text-sm font-medium">{item.speciality}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button className="w-30 bg-blue-400 text-lg font-medium text-white rounded-full cursor-pointer py-1" onClick={()=>{navigate('/doctors'); scrollTo(0,  0)}}>More</button>
     </div>
+  );
+}
+
+if (doctorerror) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-red-500">
+        {doctorError}
+      </p>
+    </div>
+  );
+}
+  return (
+   <div className="flex flex-col items-center gap-6 my-12 text-gray-800 px-4">
+  
+  {/* Heading */}
+  <div className="text-center">
+    <h1 className="text-3xl font-semibold text-blue-600">
+      Your Top Doctors
+    </h1>
+    <p className="text-gray-500 mt-2 max-w-md">
+      Find and book appointments with top specialists easily
+    </p>
+  </div>
+
+  {/* Grid */}
+  <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {doctors.length===0?<p>No doctors</p>:doctors.slice(0, 6).map((item, idx) => (
+      <div
+        key={idx}
+        onClick={() => navigate(`/appointment/${item._id}`)}
+        className="bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
+      >
+        
+        {/* Image Section */}
+        <div className="relative bg-linear-to-b from-blue-50 to-white flex justify-center py-6">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-md"
+          />
+        </div>
+
+        {/* Content */}
+        <div className="p-4 text-center">
+          
+          {/* Availability */}
+          <div className="flex items-center justify-center gap-2 text-sm mb-2">
+            <span
+              className={`w-2.5 h-2.5 rounded-full ${
+                item.available ? "bg-green-500" : "bg-red-500"
+              }`}
+            />
+            <p className="text-gray-500">
+              {item.available ? "Available" : "Unavailable"}
+            </p>
+          </div>
+
+          {/* Name */}
+          <p className="text-lg font-semibold text-gray-900">
+            {item.name}
+          </p>
+
+          {/* Speciality */}
+          <p className="text-sm text-gray-500">
+            {item.speciality}
+          </p>
+
+          {/* Button */}
+          <button className="mt-4 w-40 px-4 py-2 text-sm font-semibold bg-blue-600 text-white  hover:bg-blue-700 transition">
+            Book Appointment
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Button */}
+  <button
+    className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+    onClick={() => {
+      navigate("/doctors");
+      scrollTo(0, 0);
+    }}
+  >
+    More Doctors
+  </button>
+</div>
   );
 };
 

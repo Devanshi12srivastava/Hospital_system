@@ -27,7 +27,7 @@ const Banner = () => {
 
       <button
         onClick={() => { navigate("/login"); scrollTo(0, 0); }}
-        className="mt-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300"
+        className="mt-8 bg-linear-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300"
       >
         Get Started
       </button>

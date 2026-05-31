@@ -1,10 +1,11 @@
 import React from 'react'
 import { assets } from '../assets/assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const Contact = () => {
-
+const navigate=useNavigate()
   return (
-    <div className="px-4 md:px-10 lg:px-20 py-16">
+    <div className="px-4 mt-10 md:px-10 lg:px-20 py-16">
 
   {/* Heading */}
   <div className="text-center mb-12">
@@ -53,7 +54,7 @@ const Contact = () => {
 
           <div className="flex gap-3">
             <span className="text-blue-600">✉️</span>
-            <p>support@yourclinic.com</p>
+            <p>support@careconnect.com</p>
           </div>
 
           <div className="flex gap-3">
@@ -69,7 +70,10 @@ const Contact = () => {
 
       </div>
 
-      <button className="mt-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-7 py-3 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 w-fit">
+      <button onClick={() => {
+              navigate('/');
+              scrollTo(0, 0);
+            }}className="mt-8 bg-linear-to-r from-blue-500 to-indigo-600 text-white px-7 py-3 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200 w-fit cursor-pointer">
         Explore More
       </button>
 

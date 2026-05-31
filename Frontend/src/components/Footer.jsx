@@ -35,7 +35,7 @@ const Footer = () => {
       </p>
       <ul className="flex flex-col gap-2 text-sm">
         <li>📞 +91 55786767767</li>
-        <li>📧 support@healthcare.com</li>
+        <li>📧 support@careconnect.com</li>
       </ul>
     </div>
 

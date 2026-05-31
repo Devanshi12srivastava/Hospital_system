@@ -6,18 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { token, setToken, backendUrl } = useContext(AppContext);
-
   const [state, setState] = useState("Sign Up");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+const [Loading,setLoading] = useState(false);
+const [error,setError]=useState(null);
 
   const navigate=useNavigate()
-
   const sumbitForm = async (e) => {
     e.preventDefault();
         const payload={name,email,password}
     try {
+      setLoading(true)
+      setError(null)
       if (state === "Sign Up") {
         const response = await registerUser(backendUrl, payload);
         const data = response.data;
@@ -45,8 +47,16 @@ const Login = () => {
         }
       }
     } catch (error) {
-      toast.error(error.message);
+      setError(
+            error.response?.data?.message || error.message || "something wrong",
+          );
+          toast.error(
+            error.response?.data?.message || error.message || "something wrong",
+          );
       console.log(error)
+    }
+    finally{
+      setLoding(false)
     }
   };
 
@@ -54,8 +64,36 @@ const Login = () => {
 if(token){
 navigate('/')
 }
-  },[])
+  },[token])
 
+  const handleStateChange = (newState) => {
+  setLoading(true);
+
+  setTimeout(() => {
+    setState(newState);
+    setLoading(false);
+  }, 1000); 
+};
+
+// if (Loading) {
+//   return (
+//     <div className="min-h-screen flex items-center justify-center">
+//       <p className="text-lg font-medium text-blue-600">
+//         Loading....
+//       </p>
+//     </div>
+//   );
+// }
+
+// if (error) {
+//   return (
+//     <div className="min-h-screen flex items-center justify-center">
+//       <p className="text-red-500">
+//         {error}
+//       </p>
+//     </div>
+//   );
+// }
   return (
     <>
      <form
@@ -138,12 +176,17 @@ navigate('/')
       </div>
 
       {/* Button */}
-      <button
-        type="submit"
-        className="w-full bg-linear-to-r from-blue-500 to-blue-600 text-white py-2 rounded-lg font-medium shadow-md cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all"
-      >
-        {state === "Sign Up" ? "Create Account" : "Login"}
-      </button>
+     <button
+  type="submit"
+  disabled={Loading}
+  className="w-full bg-linear-to-r from-blue-500 to-blue-600 text-white py-2 rounded-lg font-medium shadow-md cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+>
+  {Loading
+    ? "Loading..."
+    : state === "Sign Up"
+    ? "Create Account"
+    : "Login"}
+</button>
 
       {/* Toggle */}
       <p className="text-sm text-center mt-4 text-gray-600">
@@ -151,7 +194,7 @@ navigate('/')
           <>
             Already have an account?{" "}
             <span
-              onClick={() => setState("login")}
+              onClick={() => setState("Login")}
               className="text-green-600 cursor-pointer font-medium hover:underline"
             >
               Login here

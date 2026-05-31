@@ -10,6 +10,10 @@ const AppContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [doctors, setDoctorData] = useState([]);
+  const [pageLoading,setPageLoading]=useState(false);
+  const[doctorerror,setdoctorError]=useState(null);
+
+
   const [token, setToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : false,
   );
@@ -17,6 +21,8 @@ const AppContextProvider = (props) => {
 
   const getDoctorsData = async () => {
     try {
+      setPageLoading(true);
+      setdoctorError(null)
       const response = await getDoctorList(backendUrl);
       const data = response.data;
       if (data.success) {
@@ -26,9 +32,18 @@ const AppContextProvider = (props) => {
        
       } else {
         toast.error(data);
+        setdoctorError(data.message)
       }
     } catch (error) {
+      setdoctorError(
+      error.response?.data?.message ||
+      error.message
+    );
+
       console.log(error.message);
+    }
+    finally{
+      setPageLoading(false)
     }
   };
 
@@ -58,6 +73,10 @@ const AppContextProvider = (props) => {
     userData,
     setUserData,
     loadUserProfile,
+    pageLoading,
+   setPageLoading,
+    doctorerror,
+    setdoctorError
   };
   useEffect(() => {
     getDoctorsData();
