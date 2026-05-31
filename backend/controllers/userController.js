@@ -275,8 +275,8 @@ const cancelappointments = async (req, res) => {
   }
 };
 
-console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
-console.log("SECRET:", process.env.RAZORPAY_KEY_SECRET);
+// console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
+// console.log("SECRET:", process.env.RAZORPAY_KEY_SECRET);
 
 //payment
 
