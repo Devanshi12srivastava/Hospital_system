@@ -39,7 +39,7 @@ const Navbar = () => {
                 {item.label}
               </li>
 
-              <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-linear-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute left-0 -bottom-1 h-0.1 w-0 bg-linear-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
             </NavLink>
           ))}
         </ul>
@@ -148,7 +148,7 @@ const Navbar = () => {
           </div>
 
           {/* Sidebar Links */}
-          <ul className="flex flex-col gap-2 p-5 text-gray-700">
+          <ul className="flex flex-col gap-2 p-5 text-gray-700 bg-white">
             {[
               { to: "/", label: "Home" },
               { to: "/doctors", label: "Doctors" },
@@ -158,7 +158,7 @@ const Navbar = () => {
               <NavLink
                 key={item.to}
                 to={item.to}
-                onClick={() => setshowMenu(false)}
+                onClick={() => {setshowMenu(false);  scrollTo(0, 0)}}
                 className="py-3 px-4 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition"
               >
                 {item.label}

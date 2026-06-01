@@ -1,8 +1,10 @@
 import React from 'react'
 import { assets } from '../assets/assets/assets'
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  
   return (
  <section
   className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat overflow-hidden mt-10"
@@ -43,9 +45,9 @@ const Header = () => {
           </button>
         </Link>
 
-        <button className="w-full sm:w-auto border border-gray-300 hover:border-blue-600 hover:text-blue-600 transition px-5 sm:px-7 py-3.5 sm:py-4 text-[13px] sm:text-sm font-medium bg-white rounded-md cursor-pointer">
+        <Link to="/about"><button className="w-full sm:w-auto border border-gray-300 hover:border-blue-600 hover:text-blue-600 transition px-5 sm:px-7 py-3.5 sm:py-4 text-[13px] sm:text-sm font-medium bg-white rounded-md cursor-pointer">
           Explore
-        </button>
+        </button></Link>
 
       </div>
     </div>

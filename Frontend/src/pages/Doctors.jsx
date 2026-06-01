@@ -72,7 +72,7 @@ if (doctorerror) {
           "Cardiologist",
           "Dermatologist",
           "Gastroenterologist",
-          "Pediatricians",
+          "Pediatrician",
           "Gynecologist",
           "Endocrinologist",
           "Anesthesiologist",
