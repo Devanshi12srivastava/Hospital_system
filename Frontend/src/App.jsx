@@ -10,7 +10,7 @@ import Appointmnet from "./pages/Appointmnet";
 import About from "./pages/About";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import Chatbot from "./pages/ChatBox";
+import Chatbot from "./pages/Chatbox";
 
 
 const router = createBrowserRouter([
