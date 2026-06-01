@@ -78,7 +78,7 @@ if (error) {
   <div className="flex flex-col mt-20 xl:flex-row xl:items-center xl:justify-between gap-6 mb-8">
 
     <div>
-      <h1 className="text-2xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+      <h1 className="text-2xl sm:text-2xl font-bold text-blue-700 tracking-tight">
         Appointment Dashboard
       </h1>
 

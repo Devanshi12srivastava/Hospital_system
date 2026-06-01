@@ -35,7 +35,7 @@ const navigate= useNavigate()
       <div className="flex items-center gap-3">
         
         <img
-          className="w-32 sm:w-36 lg:w-40 object-contain"
+          className="w-32 sm:w-30 lg:w-35 object-contain"
           src={assets.Doc_logo}
           alt=""
         />
@@ -56,10 +56,10 @@ const navigate= useNavigate()
             <NavLink
               to="/admin-dashboard"
               className={({ isActive }) =>
-                `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                `px-4 lg:px-5 py-2.5 rounded-xl text-lg text-gray-600 font-medium transition-all duration-300 ${
+                      isActive
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
                 }`
               }
             >
@@ -69,10 +69,10 @@ const navigate= useNavigate()
             <NavLink
               to="/all-appointment"
               className={({ isActive }) =>
-                `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                `px-4 lg:px-4 py-2.5 rounded-xl text-lg text-gray-600 font-medium transition-all duration-300 ${
+                      isActive
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
                 }`
               }
             >
@@ -82,10 +82,10 @@ const navigate= useNavigate()
             <NavLink
               to="/add-doctor"
               className={({ isActive }) =>
-                `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
+                `px-4 lg:px-5 py-2.5 rounded-xl text-lg text-gray-600 font-medium transition-all duration-300 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
                 }`
               }
             >
@@ -95,10 +95,10 @@ const navigate= useNavigate()
             <NavLink
               to="/doctor-list"
               className={({ isActive }) =>
-                `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
+                `px-4 lg:px-5 py-2.5 rounded-xl text-lg text-gray-600 font-medium transition-all duration-300 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
                 }`
               }
             >
@@ -114,9 +114,9 @@ const navigate= useNavigate()
               to="/doctor-dashboard"
               className={({ isActive }) =>
                 `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-blue-500 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                     isActive
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
                 }`
               }
             >
@@ -126,10 +126,10 @@ const navigate= useNavigate()
             <NavLink
               to="/doctor-appointment"
               className={({ isActive }) =>
-                `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-blue-500 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                `px-4 lg:px-5 py-2.5 rounded-xl text-lg text-gray-600 font-medium transition-all duration-300 ${
+                     isActive
+                    ? "text-blue-600"
+                    : "text-gray-60 hover:text-blue-600"
                 }`
               }
             >
@@ -139,10 +139,10 @@ const navigate= useNavigate()
             <NavLink
               to="/doctor-profile"
               className={({ isActive }) =>
-                `px-4 lg:px-5 py-2.5 rounded-xl text-lg font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-blue-500 text-white shadow-sm"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                `px-4 lg:px-5 py-2.5 rounded-xl text-lg  text-gray-600 font-medium transition-all duration-300 ${
+                     isActive
+                    ? "text-blue-600"
+                    : "text-gray-60 hover:text-blue-600"
                 }`
               }
             >
@@ -155,7 +155,7 @@ const navigate= useNavigate()
         <div className="ml-3 pl-3 border-l border-gray-200">
           <button
             onClick={logout}
-            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-lg font-medium transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
+            className="px-5 py-2 rounded-lg bg-blue-500 hover:bg-blue-700 text-white text-lg font-medium transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
           >
             Logout
           </button>
@@ -182,9 +182,9 @@ const navigate= useNavigate()
               to="/admin-dashboard"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-4 py-2 rounded-xl text-sm text-gray-600 font-medium transition ${
                   isActive
-                    ? "bg-gray-900 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -196,9 +196,9 @@ const navigate= useNavigate()
               to="/all-appointment"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-4 py-2 rounded-xl text-sm text-gray-500 font-medium transition ${
                   isActive
-                    ? "bg-gray-900 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -210,9 +210,9 @@ const navigate= useNavigate()
               to="/add-doctor"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-4 py-2 rounded-xl text-sm text-gray-600 font-medium transition ${
                   isActive
-                    ? "bg-gray-900 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -224,9 +224,9 @@ const navigate= useNavigate()
               to="/doctor-list"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-4 py-2 rounded-xl text-sm text-gray-600 font-medium transition ${
                   isActive
-                    ? "bg-gray-900 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -243,9 +243,9 @@ const navigate= useNavigate()
               to="/doctor-dashboard"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-4 py-2 rounded-xl text-sm text-gray-600 font-medium transition ${
                   isActive
-                    ? "bg-blue-600 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -257,9 +257,9 @@ const navigate= useNavigate()
               to="/doctor-appointment"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-2 py-3 rounded-xl text-sm text-gray-600 font-medium transition ${
                   isActive
-                    ? "bg-blue-600 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -271,9 +271,9 @@ const navigate= useNavigate()
               to="/doctor-profile"
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-3 rounded-xl text-sm font-medium transition ${
+                `block px-4 py-3 rounded-xl text-smtext-gray-600 font-medium transition ${
                   isActive
-                    ? "bg-blue-600 text-white"
+                    ? "text-blue-500"
                     : "text-gray-700 hover:bg-gray-100"
                 }`
               }
@@ -286,7 +286,7 @@ const navigate= useNavigate()
         {/* MOBILE LOGOUT */}
         <button
           onClick={logout}
-          className="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl transition-all duration-300 cursor-pointer"
+          className="w-full mt-3 bg-blue-500 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl transition-all duration-300 cursor-pointer"
         >
           Logout
         </button>
