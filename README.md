@@ -51,4 +51,5 @@ MongoDB
 
 🔔 Real-time updates
 Live Link:-https://hospital-system-veem.vercel.app/
+There is also admin panel link 
 (Admin panel link is under development)
