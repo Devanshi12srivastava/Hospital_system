@@ -17,13 +17,14 @@ The Doctor Appointment System is a web-based application designed to simplify th
 
 📊 Basic Dashboard UI
 
-**Features (Upcoming)**
-
 ✅ Appointment history tracking
 
 💳 Payment integration
 
 📧 Email notifications
+
+AI chatbot 
+Pdf viewer
 
 **#Tech Stack**
 Frontend:
