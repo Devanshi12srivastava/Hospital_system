@@ -3,8 +3,6 @@
 
 The Doctor Appointment System is a web-based application designed to simplify the process of booking and managing doctor appointments. It provides an easy-to-use interface for both patients and administrators.
 
-🚧 Note: **This project is currently under development, and new features are being added regularly.**
-
 ✨ **Features (Implemented)**
 
 🔐 User Authentication (Login / Signup)
