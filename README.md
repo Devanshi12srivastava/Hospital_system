@@ -51,3 +51,5 @@ MongoDB
 🚧 Work in Progress – Actively being developed and improved.
 
 🔔 Real-time updates
+Live Link:-https://hospital-system-veem.vercel.app/
+(Admin panel link is under development)
